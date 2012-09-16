@@ -1,5 +1,5 @@
 function get_current_cash() {
-    return format_number($('#cashCurrent').text());
+    return parseFloat($('#cashCurrent').text());
 }
 
 function get_current_level() {
