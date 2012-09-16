@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+	var storage = chrome.storage.sync.get('udid', function(items) {
+		$('#inputUdid').val(items.udid);
+	});
+
 	$('#generateUdid').click(function(e) {
 		e.preventDefault();
 		$('#inputUdid').val(generate_udid(40));
@@ -10,6 +14,12 @@ $(document).ready(function () {
 
 		var udid = $('#inputUdid').val();
 		var droid = $("#droid").is(':checked');
+
+		if ( udid ) {
+			chrome.storage.sync.set({'udid': udid}, function() {});
+		} else {
+			return false;
+		}
 
 		var pf = convert_to_pf(udid, droid);
 		var url = generate_url(udid, pf, droid);
