@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>iMobsters Helper</title>
+
+  <link href="../assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/popup.css" rel="stylesheet">
+
+</head>
+<body>
+
+<form method="post" id="imobsters_login" class="form-horizontal">
+
+  <legend>Login to iMobsters</legend>
+
+  <div class="control-group">
+    <label class="control-label" for="inputUdid">UDID</label>
+    <div class="controls">
+      <input type="text" id="inputUdid" name="inputUdid" placeholder=""><button class="btn btn-link" id="generateUdid">Generate</button>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        <input type="checkbox" name="droid" id="droid"> Android device
+      </label>
+    </div>
+  </div>
+
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button type="button" class="btn">Cancel</button>
+</div>
+
+</form>
+
+<script src="../assets/js/jquery.js"></script>
+<script src="assets/js/jquery.md5.js"></script>
+<script src="assets/js/popup.js"></script>
+
+</body>
+</html>

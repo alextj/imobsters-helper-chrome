@@ -1,0 +1,36 @@
+{
+    "name": "An iMobsters helper.",
+    "version": "1.0",
+    "background": {
+        "scripts": ["classes/spoof_agent.js"]
+    },
+    "content_scripts": [{
+        "js": [
+            "assets/js/jquery.js",
+            "classes/general.js",
+            "classes/sidebar/class-sidebar.js",
+            "classes/bank/class-bank-auto.js",
+            "classes/bank/class-bank-fixes.js",
+            "classes/equipment/class-equipment-fixes.js",
+            "classes/investment.js",
+            "classes/loot.js",
+            "classes/remove_ads.js",
+            "classes/init.js"
+        ],
+        "css": ["assets/css/storm8_styles.css", "assets/css/bootstrap.css"],
+        "matches": ["http://im.storm8.com/*"]
+    }],
+    "browser_action": {
+        "default_title": "iMobsters helper.",
+        "default_icon": "assets/img/icon48.png",
+        "default_popup": "popup/popup.html"
+    },
+    "icons": {
+        "16": "assets/img/icon16.png",
+        "48": "assets/img/icon48.png",
+        "128": "assets/img/icon128.png"
+    },
+    "permissions": ["webRequest", "webRequestBlocking", "\u003Call_urls\u003E", "tabs"],
+    "minimum_chrome_version": "17.0",
+    "manifest_version": 2
+}
