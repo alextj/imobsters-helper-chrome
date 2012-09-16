@@ -28,14 +28,14 @@ $(document).ready(function () {
             bank_fixes_init();
         }
 
-        $('#auto_bank').click(function(e) {
+        $('#bank_auto').click(function(e) {
             e.preventDefault();
-            auto_bank();
+            bank_auto();
         });
 
-        $('#auto_invest').click(function(e) {
+        $('#investment_auto').click(function(e) {
             e.preventDefault();
-            auto_invest();
+            investment_auto();
         });
 
     }

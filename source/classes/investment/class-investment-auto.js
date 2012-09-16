@@ -1,4 +1,4 @@
-function auto_invest() {
+function investment_auto() {
 
     if ( !invest_verify() ) {
         return false;

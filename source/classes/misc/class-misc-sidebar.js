@@ -5,8 +5,8 @@ function create_sidebar() {
     var menu = get_menu_items();
     var nav = '';
 
-    nav += create_button('', 'Auto deposit', 'auto_bank', 'btn-info' );
-    nav += create_button('', 'Auto invest', 'auto_invest', 'btn-info' );
+    nav += create_button('', 'Auto deposit', 'bank_auto', 'btn-info' );
+    nav += create_button('', 'Auto invest', 'investment_auto', 'btn-info' );
 
     for (var index in menu) {
         nav += create_button(menu[index], index, '', 'btn-inverse');

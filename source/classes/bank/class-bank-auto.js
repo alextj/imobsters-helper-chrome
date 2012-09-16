@@ -1,7 +1,7 @@
 /**
  * Automatically deposit your full cash on hand amount.
  */
-function auto_bank() {
+function bank_auto() {
 
     if ( !bank_verify() ) {
         return false;
