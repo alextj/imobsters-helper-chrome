@@ -45,8 +45,7 @@ function investment_auto() {
 	}
 
     alert(
-        "Newly gained income: " + numberWithCommas(data['newIncome']) + "\n\n\
-        Total money spent: " + numberWithCommas(data['totalCost'])
+        "Newly gained income: " + numberWithCommas(data['newIncome']) + "\n\nTotal money spent: " + numberWithCommas(data['totalCost'])
     );
 
 }
