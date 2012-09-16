@@ -70,6 +70,9 @@ function invest_verify() {
       return false;
     }
 
+    // Assuming all is well
+    return true;
+
 }
 
 function numberWithCommas(x) {
