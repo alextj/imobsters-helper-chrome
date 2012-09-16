@@ -8,6 +8,11 @@ $(document).ready(function () {
         // Remove advertisements
         remove_adverts();
 
+        // Home fix
+        if (document.URL.indexOf("home.php") > 0) {
+            home_fixes_init();
+        }
+
         // Equipment fix
         if (document.URL.indexOf("equipment.php") > 0) {
             equipment_fixes_init();

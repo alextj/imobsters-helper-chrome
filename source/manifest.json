@@ -28,6 +28,9 @@
             // Equipment
             "classes/equipment/class-equipment-fixes.js",
 
+            // Home
+            "classes/home/class-home-fixes.js",
+
             // Investment
             "classes/investment/class-investment-auto.js",
             "classes/investment/class-investment-fixes.js",
