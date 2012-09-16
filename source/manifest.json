@@ -2,24 +2,50 @@
     "name": "An iMobsters helper.",
     "version": "1.0",
     "background": {
-        "scripts": ["classes/misc/class-misc-spoof-agent.js"]
+        "scripts": [
+
+            // User agent spoofer
+            "classes/misc/class-misc-spoof-agent.js"
+
+        ]
     },
     "content_scripts": [{
+
         "js": [
+
+            // jQuery
             "assets/js/jquery.js",
+
+            // Miscellaneous
             "classes/misc/class-misc-general.js",
             "classes/misc/class-misc-remove-ads.js",
             "classes/misc/class-misc-sidebar.js",
+
+            // Bank
             "classes/bank/class-bank-auto.js",
             "classes/bank/class-bank-fixes.js",
+
+            // Equipment
             "classes/equipment/class-equipment-fixes.js",
+
+            // Investment
             "classes/investment/class-investment-auto.js",
             "classes/investment/class-investment-fixes.js",
+
+            // Loot
             "classes/loot/class-loot-fixes.js",
+
+            // FOR SPARTA
             "classes/init.js"
         ],
-        "css": ["assets/css/storm8_styles.css", "assets/css/bootstrap.css"],
+
+        "css": [
+            "assets/css/storm8_styles.css",
+            "assets/css/bootstrap.css"
+        ],
+
         "matches": ["http://im.storm8.com/*"]
+
     }],
     "browser_action": {
         "default_title": "iMobsters helper.",
