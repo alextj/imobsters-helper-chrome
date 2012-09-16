@@ -2,19 +2,19 @@
     "name": "An iMobsters helper.",
     "version": "1.0",
     "background": {
-        "scripts": ["classes/spoof_agent.js"]
+        "scripts": ["classes/misc/class-misc-spoof-agent.js"]
     },
     "content_scripts": [{
         "js": [
             "assets/js/jquery.js",
-            "classes/general.js",
-            "classes/sidebar/class-sidebar.js",
+            "classes/misc/class-misc-general.js",
+            "classes/misc/class-misc-remove-ads.js",
+            "classes/misc/class-misc-sidebar.js",
             "classes/bank/class-bank-auto.js",
             "classes/bank/class-bank-fixes.js",
             "classes/equipment/class-equipment-fixes.js",
-            "classes/investment.js",
-            "classes/loot.js",
-            "classes/remove_ads.js",
+            "classes/investment/class-investment-auto.js",
+            "classes/loot/class-loot-fixes.js",
             "classes/init.js"
         ],
         "css": ["assets/css/storm8_styles.css", "assets/css/bootstrap.css"],
