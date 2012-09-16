@@ -2,8 +2,7 @@
  * Creates a helpful sidebar to navigate through the screens.
  */
 function create_sidebar() {
-
-    var menu get_menu_items();
+    var menu = get_menu_items();
     var nav = '';
 
     nav += create_button('', 'Auto deposit', 'auto_bank', 'btn-info' );
