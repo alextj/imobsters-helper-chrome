@@ -10,22 +10,22 @@ $(document).ready(function () {
 
         // Equipment Fix
         if (document.URL.indexOf("equipment.php") > 0) {
-            equipment_fixes();
+            equipment_fixes_init();
         }
 
         // Investment Fix
         if (document.URL.indexOf("investment.php") > 0) {
-            investment_fixes();
+            investment_fixes_init();
         }
 
         // Loot Fix
         if (document.URL.indexOf("selectedTab=loot") > 0) {
-            loot_fixes();
+            loot_fixes_init();
         }
 
         // Bank Fix
         if (document.URL.indexOf("bank.php") > 0) {
-            bank_fixes();
+            bank_fixes_init();
         }
 
         $('#auto_bank').click(function(e) {
