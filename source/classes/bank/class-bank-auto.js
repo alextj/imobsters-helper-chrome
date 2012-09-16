@@ -42,13 +42,13 @@ function bank_verify() {
  */
 function bank_deposit(amount) {
 
-    if ( !amount ) {
-        alert("Deposit failed. Could not find cash value.");
+    if ( amount === 0 ) {
+        alert("Deposit failed. You have no cash to bank!")
         return false;
     }
 
-    if ( amount == 0 ) {
-        alert("Deposit failed. You have no cash to bank!")
+    if ( !amount ) {
+        alert("Deposit failed. Could not find cash value.");
         return false;
     }
 
