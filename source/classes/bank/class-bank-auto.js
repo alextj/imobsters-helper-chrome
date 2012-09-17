@@ -59,7 +59,7 @@ function bank_deposit(amount) {
 		depositAmount: amount,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		alert("Success! Amount deposited: " + amount);
+		alert("Success! Amount deposited: " + numberWithCommas(amount));
 		return true;
 	});
 
