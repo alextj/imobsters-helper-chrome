@@ -3,7 +3,7 @@ iMobsters Helper for Chrome
 
 A Chrome extension for Storm8's iMobsters game.
 
-![](http://i.imgur.com/sjFeX.png)
+![](http://i.imgur.com/Xflx6.pngg)
 
 Quick start
 ------------
