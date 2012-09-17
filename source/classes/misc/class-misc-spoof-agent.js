@@ -1,10 +1,10 @@
 var requestFilter = {
-    	urls: ["*://*.im.storm8.com/*"]
-	},
+	urls: ["*://*.im.storm8.com/*"]
+},
 
 	extraInfoSpec = ['requestHeaders', 'blocking'],
 
-	handler = function (details) {
+	handler = function(details) {
 
 		// Droid
 		if (details.url.indexOf('version=a1.54') > 0) {
@@ -16,22 +16,22 @@ var requestFilter = {
 			var UA = "Mozilla/5.0 (iPod; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403";
 		}
 
-		if ( !UA ) {
+		if (!UA) {
 			return;
 		}
 
-	    var headers = details.requestHeaders,
-	    	blockingResponse = {};
+		var headers = details.requestHeaders,
+			blockingResponse = {};
 
-	    for (var i = 0, l = headers.length; i < l; ++i) {
-	        if (headers[i].name == 'User-Agent') {
-	            headers[i].value = UA;
-	            break;
-	        }
-	    }
+		for (var i = 0, l = headers.length; i < l; ++i) {
+			if (headers[i].name == 'User-Agent') {
+				headers[i].value = UA;
+				break;
+			}
+		}
 
 		blockingResponse.requestHeaders = headers;
-	    return blockingResponse;
+		return blockingResponse;
 
 	};
 

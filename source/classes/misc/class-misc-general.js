@@ -4,16 +4,18 @@
  * On hand means cash not in the bank.
  * @return {float} Numerical value of on hand cash.
  */
+
 function get_current_cash() {
-    return format_number($('#cashCurrent').text());
+	return format_number($('#cashCurrent').text());
 }
 
 /**
  * Level of the user.
  * @return {string} Level represented as a string.
  */
+
 function get_current_level() {
-    return $('.levelFrontTopArea').text();
+	return $('.levelFrontTopArea').text();
 }
 
 /**
@@ -23,21 +25,22 @@ function get_current_level() {
  * @param  {string} numba The number to convert.
  * @return {float}       Number as a float.
  */
+
 function format_number(numba) {
 
-    numba = numba.replace(/[$,]/g,'');
+	numba = numba.replace(/[$,]/g, '');
 
-    if (numba.lastIndexOf('K') != -1) {
-        numba = parseFloat(numba) * 1000;
-    } else if (numba.lastIndexOf('mil') != -1) {
-        numba = parseFloat(numba) * 1000000;
-    } else if (numba.lastIndexOf('bil') != -1) {
-        numba = parseFloat(numba) * 1000000000;
-    } else {
-        numba = parseFloat(numba);
-    }
+	if (numba.lastIndexOf('K') != -1) {
+		numba = parseFloat(numba) * 1000;
+	} else if (numba.lastIndexOf('mil') != -1) {
+		numba = parseFloat(numba) * 1000000;
+	} else if (numba.lastIndexOf('bil') != -1) {
+		numba = parseFloat(numba) * 1000000000;
+	} else {
+		numba = parseFloat(numba);
+	}
 
-    return numba;
+	return numba;
 }
 
 /**
@@ -45,6 +48,7 @@ function format_number(numba) {
  * @param  {int} nahmba The number, eg 2003939
  * @return {string}        The number with commas added, eg 2,003,939
  */
+
 function numberWithCommas(nahmba) {
-    return nahmba.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return nahmba.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
