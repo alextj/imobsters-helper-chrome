@@ -39,3 +39,12 @@ function format_number(numba) {
 
     return numba;
 }
+
+/**
+ * Takes a number and adds pretty commas.
+ * @param  {int} nahmba The number, eg 2003939
+ * @return {string}        The number with commas added, eg 2,003,939
+ */
+function numberWithCommas(nahmba) {
+    return nahmba.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
