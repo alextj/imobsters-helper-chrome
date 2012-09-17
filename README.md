@@ -38,6 +38,11 @@ Skeptical? Don't want to use your UDID? Generate a fake one to start a new chara
 
 User either an Android or iOS device's ID to login to iMobsters through your browser.
 
+Donate
+-----------
+
+Want to help support new features and releases? Consider [donating](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@mgates.me&item_name=Donation for iMobsters!) :)
+
 Bug tracker
 -----------
 
