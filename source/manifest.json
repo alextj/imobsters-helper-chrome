@@ -70,6 +70,7 @@
         "tabs",
         "storage"
     ],
+    "update_url": "https://raw.github.com/Geczy/imobsters-helper-chrome/master/source/updates.xml" ,
     "minimum_chrome_version": "17.0",
     "manifest_version": 2
 }
