@@ -45,6 +45,12 @@ $(document).ready(function() {
 			investment_auto();
 		});
 
+		// Auto invite mob codes
+		$('#invite_auto').click(function(e) {
+			e.preventDefault();
+			invite_auto();
+		});
+
 	}
 
 	init();

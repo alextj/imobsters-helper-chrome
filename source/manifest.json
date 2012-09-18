@@ -38,6 +38,9 @@
             // Loot
             "classes/loot/class-loot-fixes.js",
 
+            // Invite
+            "classes/invite/class-invite-auto.js",
+
             // FOR SPARTA
             "classes/init.js"
         ],
