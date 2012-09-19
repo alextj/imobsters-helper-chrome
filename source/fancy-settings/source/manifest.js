@@ -48,6 +48,8 @@ window.manifest = {
     },
 
     /* Autos */
+
+    // Invite
     {
       "tab": "Autos",
       "group": "Invite",
@@ -57,6 +59,8 @@ window.manifest = {
       "placeholder": "AJAF38,YP3ST3,938FJD,etc",
       "default": ""
     },
+
+    // Heal
     {
       "tab": "Autos",
       "group": "Heal",
@@ -101,6 +105,23 @@ window.manifest = {
       "name": "heal_silent_label",
       "type": "label",
       "label": "Hide the prompt that says whether healing was successful or not."
+    },
+
+    // Fight
+    {
+      "tab": "Autos",
+      "group": "Fight",
+      "name": "fight_hide_strong",
+      "type": "checkbox",
+      "label": "Hide strong players",
+      "default": true
+    },
+    {
+      "tab": "Autos",
+      "group": "Fight",
+      "name": "fight_hide_strong_label",
+      "type": "label",
+      "label": "Automatically hide players that are stronger than you. This will calculate each player's total defense points and compare it with your total attack points. If a player's defense is higher than your attack points, the player will be hidden."
     },
   ]
 };

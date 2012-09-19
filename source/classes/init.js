@@ -16,6 +16,11 @@ function init() {
 	// Remove advertisements
 	remove_adverts();
 
+	// Attack helper
+	if (options.fight_hide_strong && document.URL.indexOf("fight.php") > 0) {
+		fight_helper_init();
+	}
+
 	// Home fix
 	if (document.URL.indexOf("home.php") > 0) {
 		home_fixes_init();
