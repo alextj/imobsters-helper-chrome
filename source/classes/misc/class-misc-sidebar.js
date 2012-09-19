@@ -9,6 +9,7 @@ function create_sidebar() {
 	nav += create_button('', 'Auto deposit', 'bank_auto', 'btn-info');
 	nav += create_button('', 'Auto invest', 'investment_auto', 'btn-info');
 	nav += create_button('', 'Auto invite', 'invite_auto', 'btn-info');
+	nav += create_button('', 'Heal', 'heal_auto', 'btn-success');
 
 	for (var index in menu) {
 		nav += create_button(menu[index], index, '', 'btn-inverse');

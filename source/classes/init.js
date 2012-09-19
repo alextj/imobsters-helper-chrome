@@ -45,6 +45,12 @@ $(document).ready(function() {
 			investment_auto();
 		});
 
+		// Auto heal
+		$('#heal_auto').click(function(e) {
+			e.preventDefault();
+			heal_auto();
+		});
+
 		// Auto invite mob codes
 		$('#invite_auto').click(function(e) {
 			e.preventDefault();
