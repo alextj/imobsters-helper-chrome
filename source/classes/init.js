@@ -51,6 +51,14 @@ $(document).ready(function() {
 			heal_auto();
 		});
 
+		// Do auto heal while attacking
+		if ($('.messageBoxFail').length) {
+			var message = $('.messageBoxFail .fail').text().trim();
+			if (message == 'Wounded!') {
+				heal_auto();
+			}
+		}
+
 		// Auto invite mob codes
 		$('#invite_auto').click(function(e) {
 			e.preventDefault();
