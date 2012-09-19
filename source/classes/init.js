@@ -62,7 +62,7 @@ function init() {
 	});
 
 	// Do auto heal while attacking
-	if ($('.messageBoxFail').length) {
+	if (options.heal_auto && $('.messageBoxFail').length) {
 		var message = $('.messageBoxFail .fail').text().trim();
 		if (message == 'Wounded!') {
 			heal_auto();

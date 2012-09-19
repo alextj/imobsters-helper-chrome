@@ -23,12 +23,16 @@ function heal_verify() {
 	var level = get_current_level();
 
 	if (!level) {
-		alert("Action failed. Level could not be found.")
+		if (!options.heal_ninja) {
+			alert("Action failed. Level could not be found.")
+		}
 		return false;
 	}
 
 	if (level < 5) {
-		alert("Action failed. You must be level 5+ to heal.")
+		if (!options.heal_ninja) {
+			alert("Action failed. You must be level 5+ to heal.")
+		}
 		return false;
 	}
 
@@ -60,7 +64,9 @@ function heal_process(data) {
 		var cash = $(data).find('.hospitalText .cash').text();
 
 		if (format_number(cash) < format_number(cost)) {
-			alert("Failed. You don't have enough money in the bank to pay for that.")
+			if (!options.heal_ninja) {
+				alert("Failed. You don't have enough money in the bank to pay for that.")
+			}
 			return false;
 		} else {
 			$.get(url, function(data) {
@@ -69,8 +75,10 @@ function heal_process(data) {
 		}
 
 	} else {
-		var text = $(data).find('.hospitalText').text();
-		alert('Failed. ' + text);
+		if (!options.heal_ninja) {
+			var text = $(data).find('.hospitalText').text();
+			alert('Failed. ' + text);
+		}
 		return false;
 	}
 
@@ -83,9 +91,17 @@ function heal_check_success(data, cost) {
 	var failedText = $(data).find('.messageBoxFail').text();
 
 	if (failedText) {
-		alert("Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
+		if (!options.heal_ninja) {
+			alert("Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
+		}
+		return false;
 	} else {
-		alert('Success. Healed for: ' + cost);
+		if (!options.heal_ninja) {
+			alert('Success. Healed for: ' + cost);
+		}
+		return true;
 	}
+
+	return false;
 
 }

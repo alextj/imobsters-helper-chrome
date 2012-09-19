@@ -52,17 +52,32 @@ window.manifest = {
     {
       "tab": "Autos",
       "group": "Heal",
-      "name": "autoHeal",
+      "name": "heal_auto",
       "type": "checkbox",
-      "label": "Heal automatically while fighting",
+      "label": "Heal automatically",
       "default": true
     },
     {
       "tab": "Autos",
       "group": "Heal",
-      "name": "myLabel",
+      "name": "heal_auto_label",
       "type": "label",
-      "label": "As you're fighting other users, if the bot detects that your health is too low to fight anymore, it will automatically heal you. An alert message will show with the status of the healing, whether it was successful or not."
+      "label": "Automatically heal you as you're fighting other users. Only heals when your health is at its lowest."
+    },
+    {
+      "tab": "Autos",
+      "group": "Heal",
+      "name": "heal_ninja",
+      "type": "checkbox",
+      "label": "Ninja heal",
+      "default": false
+    },
+    {
+      "tab": "Autos",
+      "group": "Heal",
+      "name": "heal_silent_label",
+      "type": "label",
+      "label": "Hide the prompt that says whether healing was successful or not."
     },
   ]
 };
