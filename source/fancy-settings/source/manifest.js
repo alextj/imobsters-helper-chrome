@@ -43,7 +43,7 @@ window.manifest = {
       "group": "Notes",
       "name": "notes",
       "type": "textarea",
-      "label": "Keep track of UDIDs you want to login with",
+      "label": "This textbox automatically adds UDIDs you've logged in with",
       "default": ""
     },
 

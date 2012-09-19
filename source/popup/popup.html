@@ -15,9 +15,9 @@
   <legend>Login to iMobsters</legend>
 
   <div class="control-group">
-    <label class="control-label" for="inputUdid">UDID</label>
     <div class="controls">
-      <input type="text" id="inputUdid" name="inputUdid" placeholder=""><button class="btn btn-link" id="generateUdid">Generate</button>
+      <select id="udids" name="udids">
+      </select>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
 
 <div class="form-actions">
   <button type="submit" class="btn btn-primary">Sign in</button>
-  <button type="button" class="btn">Cancel</button>
+  <button type="button" id="optionsPage" class="btn">Settings</button>
 </div>
 
 </form>
