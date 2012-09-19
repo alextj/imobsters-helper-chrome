@@ -4,6 +4,10 @@
     "background": {
         "scripts": [
 
+            // Store settings in a variable, var = options
+            "fancy-settings/source/lib/store.js",
+            "assets/js/settings.js",
+
             // User agent spoofer
             "classes/misc/class-misc-spoof-agent.js"
 
