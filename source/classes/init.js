@@ -61,8 +61,8 @@ function init() {
 
 	// Do auto heal while attacking
 	if (options.heal_auto && $('.messageBoxFail').length) {
-		var message = $('.messageBoxFail .fail').text().trim();
-		if (message == 'Wounded!') {
+		var health = $('#healthCurrent').text().trim();
+		if (health <= 27) {
 			heal_auto();
 		}
 	}
