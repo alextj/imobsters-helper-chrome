@@ -28,17 +28,24 @@ function get_current_level() {
 
 function format_number(numba) {
 
-	numba = numba.replace(/[$,]/g, '');
+	var multiplier = 1;
 
 	if (numba.lastIndexOf('K') != -1) {
-		numba = parseFloat(numba) * 1000;
+		multiplier = 1000;
 	} else if (numba.lastIndexOf('mil') != -1) {
-		numba = parseFloat(numba) * 1000000;
+		multiplier = 1000000;
 	} else if (numba.lastIndexOf('bil') != -1) {
-		numba = parseFloat(numba) * 1000000000;
-	} else {
-		numba = parseFloat(numba);
+		multiplier = 1000000000;
 	}
+
+	// Remove commas
+	numba = numba.replace(/[,]/g, '');
+
+	// Keep only digits in this numbuh
+	numba = numba.replace(/\D+/, '');
+
+	// And turn it into a float
+	numba = parseFloat(numba) * multiplier;
 
 	return numba;
 }
