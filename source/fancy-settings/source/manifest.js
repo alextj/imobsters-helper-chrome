@@ -70,7 +70,22 @@ window.manifest = {
       "group": "Heal",
       "name": "heal_auto_label",
       "type": "label",
-      "label": "Automatically heal you as you're fighting other users. Only heals when your health is at its lowest."
+      "label": "Automatically heal you as you're fighting other users. Only heals when your health is at or below the threshold point."
+    },
+    {
+      "tab": "Autos",
+      "group": "Heal",
+      "name": "health_threshold",
+      "type": "slider",
+      "label": "Threshold:",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "display": true,
+      "displayModifier": function (value) {
+        return value + "%";
+      },
+      "default": 50
     },
     {
       "tab": "Autos",

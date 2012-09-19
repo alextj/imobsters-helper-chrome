@@ -59,12 +59,17 @@ function init() {
 		heal_auto();
 	});
 
-	// Do auto heal while attacking
-	if (options.heal_auto && $('.messageBoxFail').length) {
+	// Do auto heal
+	if (options.heal_auto) {
+
 		var health = $('#healthCurrent').text().trim();
-		if (health <= 27) {
+		var maxHealth = $('#healthMax').text().trim();
+		var ratio = (health / maxHealth) * 100;
+
+		if ( ratio <= options.health_threshold) {
 			heal_auto();
 		}
+
 	}
 
 	// Auto invite mob codes
