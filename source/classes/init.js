@@ -10,8 +10,6 @@ $(document).ready(function() {
 
 function init() {
 
-	console.log(options);
-
 	// Create the sidebar menu
 	create_sidebar();
 

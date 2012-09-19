@@ -24,8 +24,16 @@ window.manifest = {
     },
     {
       "tab": "Accounts",
+      "group": "Setup",
+      "name": "generateUDID",
+      "type": "pushButton",
+      "label": "Generate a fake UDID",
+      "value": "Generate"
+    },
+    {
+      "tab": "Accounts",
       "group": "Login",
-      "name": "myPushButton",
+      "name": "login",
       "type": "pushButton",
       "label": "Sign in with your device",
       "value": "Login"

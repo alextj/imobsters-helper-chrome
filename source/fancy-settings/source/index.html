@@ -9,16 +9,18 @@
   <head>
     <meta charset="utf-8">
     <title id="title"></title>
-    
+
     <!-- Stylesheets -->
     <link rel="icon" href="img/favicon.png">
     <link rel="stylesheet" href="lib/default.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/setting.css">
     <link rel="stylesheet" href="custom.css">
-    
+
     <!-- JavaScripts -->
     <script src="lib/mootools.js"></script>
+    <script src="lib/moo-md5-bundle/String.UTF-8.js"></script>
+    <script src="lib/moo-md5-bundle/String.MD5.js"></script>
     <script src="lib/store.js"></script>
     <script src="js/classes/tab.js"></script>
     <script src="js/classes/setting.js"></script>
@@ -36,13 +38,13 @@
         <div id="search-tab"></div>
       </div>
     </div>
-    
+
     <div id="content">
       <!-- Search box -->
       <div id="search-container">
         <input id="search" type="search">
       </div>
-      
+
       <!-- Search tab content -->
       <div id="search-tab-content">
         <h2 id="search-tab-name"></h2>
