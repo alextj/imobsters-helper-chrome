@@ -8,14 +8,19 @@ window.addEvent("domready", function() {
             options = settings.toObject();
 
             var udid = options.mainAccount;
-            var droid = options.androidDevice;
             var old = options.notes;
+
+            // No UDID was entered
+            if (!udid.length) {
+                alert("Please enter a UDID, or click Generate to create one.");
+                return false;
+            }
 
             if (!array_contains(old.split(/\n/), udid)) {
                 settings.set("notes", udid + "\n" + old);
             }
 
-            login(udid, droid);
+
 
         });
 
@@ -41,33 +46,6 @@ function array_contains(a, obj) {
        }
     }
     return false;
-}
-
-// Login button has been clicked.
-
-function login(udid, droid) {
-
-    // No UDID was entered
-    if (!udid.length) {
-        alert("Please enter a UDID, or click Generate to create one.");
-        return false;
-    }
-
-    // Save the submitted UDID to storage
-    // @todo
-    var pf = convert_to_pf(udid, droid);
-    var url = generate_url(udid, pf, droid);
-
-    if (!url.length || !pf.length) {
-        return false;
-    }
-
-    // Open the login page in a new tab
-    chrome.tabs.create({
-        "url": url,
-        "active": true
-    }, function(tab) {});
-
 }
 
 /**
@@ -115,45 +93,5 @@ function convert_to_pf(udid, droid) {
     var salt = droid ? droid_salt : ios_salt;
 
     return (udid + ':' + salt).toMD5();
-
-}
-
-/**
- * Login URL for accessing Storm8.
- * @param  {string} udid  UDID for the device.
- * @param  {string} pf    Generated PF from UDID.
- * @param  {boolean} droid Android device?
- * @return {string}       The URL to login.
- */
-
-function generate_url(udid, pf, droid) {
-
-    if (droid) {
-
-        var params = {
-            'fpts': 12,
-            'version': 'a1.54',
-            'udid': udid,
-            'pf': pf
-        };
-        var page = 'apoints.php';
-
-    } else {
-
-        var params = {
-            'version': '1.74',
-            'udid': udid,
-            'pf': pf
-        };
-        var page = 'index.php';
-
-    }
-
-    var param = '';
-    for (var i in params) {
-        param = param + i + '=' + params[i] + '&';
-    }
-
-    return 'http://im.storm8.com/' + page + '?' + param.slice(0, -1);
 
 }

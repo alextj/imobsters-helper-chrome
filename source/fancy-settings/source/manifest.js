@@ -24,7 +24,7 @@ window.manifest = {
     },
     {
       "tab": "Accounts",
-      "group": "Setup",
+      "group": "History",
       "name": "generateUDID",
       "type": "pushButton",
       "label": "Generate a fake UDID",
@@ -32,18 +32,17 @@ window.manifest = {
     },
     {
       "tab": "Accounts",
-      "group": "Login",
+      "group": "History",
       "name": "login",
       "type": "pushButton",
-      "label": "Sign in with your device",
-      "value": "Login"
+      "value": "Save"
     },
     {
       "tab": "Accounts",
-      "group": "Notes",
+      "group": "History",
       "name": "notes",
       "type": "textarea",
-      "label": "This textbox automatically adds UDIDs you've logged in with",
+      "label": "This textbox contains UDIDs you've saved",
       "default": ""
     },
 
