@@ -33,7 +33,7 @@ window.manifest = {
     {
       "tab": "Accounts",
       "group": "History",
-      "name": "login",
+      "name": "save_udid",
       "type": "pushButton",
       "value": "Save"
     },
@@ -52,7 +52,7 @@ window.manifest = {
     {
       "tab": "Autos",
       "group": "Invite",
-      "name": "inviteCodes",
+      "name": "invite_codes",
       "type": "textarea",
       "label": "Enter a list of codes",
       "placeholder": "AJAF38,YP3ST3,938FJD,etc",
@@ -121,6 +121,28 @@ window.manifest = {
       "name": "fight_hide_strong_label",
       "type": "label",
       "label": "Automatically hide players that are stronger than you. This will calculate each player's total defense points and compare it with your total attack points. If a player's defense is higher than your attack points, the player will be hidden."
+    },
+    {
+      "tab": "Autos",
+      "group": "Fight",
+      "name": "fight_threshold",
+      "type": "slider",
+      "label": "Threshold:",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "display": true,
+      "displayModifier": function (value) {
+        return value + "%";
+      },
+      "default": 20
+    },
+    {
+      "tab": "Autos",
+      "group": "Fight",
+      "name": "fight_hide_strong_threshold_label",
+      "type": "label",
+      "label": "Only show players that are under x% of my attack points.<br/>Eg, at 10% and with 240,000 attack points total, it will only show players that are under 216,000 defense points."
     },
   ]
 };

@@ -3,7 +3,8 @@ window.addEvent("domready", function() {
 
     FancySettings.initWithManifest(function(fancySettings) {
 
-        fancySettings.settings.login.addEvent("click", function() {
+        // Generate button should generate a UDID and fill it in the input.
+        fancySettings.settings.save_udid.addEvent("click", function() {
             var settings = new Store("settings");
             options = settings.toObject();
 
@@ -33,6 +34,7 @@ window.addEvent("domready", function() {
             settings.set("mainAccount", newid);
 
         });
+
 
     });
 

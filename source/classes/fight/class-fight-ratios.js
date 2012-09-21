@@ -4,6 +4,7 @@
 
 var myAttack = 0;
 var myDefense = 0;
+var threshold = 0;
 
 function fight_helper_init() {
 
@@ -16,9 +17,13 @@ function fight_my_ratios() {
 	$.get('profile.php?x=1&selectedTab=main', function(data) {
 
 		var stats = fight_calculate_stats(data);
+
 		myAttack = stats['attack'];
 		myDefense = stats['defense'];
-		$('.hdFightMobster').text('Your attack: ' + numberWithCommas(stats['attack']));
+		threshold = myAttack * (100 - options.fight_threshold) / 100;
+
+		$('.hdFightMobster').text('Threshold attack: ' + numberWithCommas(threshold));
+
 		fight_find_each_enemy();
 
 	});
@@ -70,7 +75,7 @@ function fight_find_enemy_ratio(fightPage) {
 
 		$(fightPage).closest('.fightMobster > div').next().text('Defense: ' + numberWithCommas(stats['defense']));
 
-		if (stats['defense'] > myAttack) {
+		if (stats['defense'] > threshold) {
 			$(fightPage).closest('.fightItem').hide();
 		}
 
