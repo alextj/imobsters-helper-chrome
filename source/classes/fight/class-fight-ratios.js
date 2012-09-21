@@ -13,12 +13,12 @@ function fight_helper_init() {
 
 function fight_my_ratios() {
 
-	$.get('profile.php', function(data) {
+	$.get('profile.php?x=1&selectedTab=main', function(data) {
 
 		var stats = fight_calculate_stats(data);
 		myAttack = stats['attack'];
 		myDefense = stats['defense'];
-
+		$('.hdFightMobster').text('Your attack: ' + numberWithCommas(stats['attack']));
 		fight_find_each_enemy();
 
 	});
@@ -67,6 +67,8 @@ function fight_find_enemy_ratio(fightPage) {
 	$.get(url, function(data) {
 
 		var stats = fight_calculate_stats(data);
+
+		$(fightPage).closest('.fightMobster > div').next().text('Defense: ' + numberWithCommas(stats['defense']));
 
 		if (stats['defense'] > myAttack) {
 			$(fightPage).closest('.fightItem').hide();
