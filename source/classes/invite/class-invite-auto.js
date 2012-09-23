@@ -59,7 +59,7 @@ function invite_verify() {
 }
 
 function invite_code_list() {
-	var list = 'XA37J8,CPJ4VD,NNVF4S';
+	var list = options.invite_codes;
 	return list.split(',');
 }
 
@@ -73,7 +73,7 @@ function invite_send(list) {
 
 	var list = invite_code_list();
 
-	if (!list) {
+	if (!list.length) {
 		alert("Invite failed. There are no codes to invite.")
 		return false;
 	}
@@ -97,14 +97,17 @@ function invite_submit_request(code) {
 	$.ajax({
 		type: 'POST',
 		url: 'group.php',
+		async: false,
 		data: {
 			mobcode: code,
 			action: 'Invite'
 		},
-		success: function(data, textStatus, xhr) {
+		success: function(data) {
 			invite_log_requests(data, code);
 		}
 	});
+
+	return true;
 
 }
 
@@ -112,23 +115,18 @@ function invite_log_requests(data, code) {
 
 	var failed = $(data).find('.messageBoxFail').text();
 	var success = $(data).find('.messageBoxSuccess').text();
-	var invited = false;
 
-	if (failed != '') {
+	if (failed.length) {
 		console.log(code + ": Failed. " + failed.replace('Insuccesso: ', ''));
-
-		if (failed.indexOf('too many pending invites') > 0) {
-			limitExceeded = true;
-		}
-
-		invited = false;
+		limitExceeded = (failed.indexOf('you have too many pending invites') > 0);
+		failCount++;
 	}
 
-	if (success != '') {
+	if (success.length) {
 		console.log(code + ": Success.");
-		invited = true;
+		successCount++;
 	}
 
-	invited ? successCount++ : failCount++;
+	return limitExceeded;
 
 }
