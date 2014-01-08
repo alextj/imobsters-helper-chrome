@@ -1,30 +1,35 @@
 var options;
+var uid;
 $(document).ready(function() {
-
-    g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem('g_missionsAutoMissionEnabled'));
-    g_missionsNextEnergy = JSON.parse(localStorage.getItem('g_missionsNextEnergy'));
-    g_missionsStartDoingNow = JSON.parse(localStorage.getItem('g_missionsStartDoingNow'));
-    g_investmentAutoInvestEnabled = JSON.parse(localStorage.getItem('g_investmentAutoInvestEnabled'));
-    g_investmentNextCost = JSON.parse(localStorage.getItem('g_investmentNextCost'));
-    g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem('g_investmentStartAutoInvestmentNow'));
 
 	chrome.extension.sendRequest({action: 'gpmeGetOptions'}, function(theOptions) {
 		options = theOptions;
-		init();
+		chrome.storage.sync.get('udid', function(obj) {
+            uid = obj['udid'];
+            init();
+		});
+
 	});
 });
 
 function g_save() {
 
-    localStorage.setItem('g_investmentNextCost', JSON.stringify(g_investmentNextCost));
-    localStorage.setItem('g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
-    localStorage.setItem('g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
-    localStorage.setItem('g_investmentStartAutoInvestmentNow', JSON.stringify(g_investmentStartAutoInvestmentNow));
-    localStorage.setItem('g_investmentAutoInvestEnabled', JSON.stringify(g_investmentAutoInvestEnabled));
-    localStorage.setItem('g_missionsAutoMissionEnabled', JSON.stringify(g_missionsAutoMissionEnabled));
+    localStorage.setItem(uid+'g_investmentNextCost', JSON.stringify(g_investmentNextCost));
+    localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
+    localStorage.setItem(uid+'g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
+    localStorage.setItem(uid+'g_investmentStartAutoInvestmentNow', JSON.stringify(g_investmentStartAutoInvestmentNow));
+    localStorage.setItem(uid+'g_investmentAutoInvestEnabled', JSON.stringify(g_investmentAutoInvestEnabled));
+    localStorage.setItem(uid+'g_missionsAutoMissionEnabled', JSON.stringify(g_missionsAutoMissionEnabled));
 }
 
 function init() {
+
+    g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));
+    g_missionsNextEnergy = JSON.parse(localStorage.getItem(uid+'g_missionsNextEnergy'));
+    g_missionsStartDoingNow = JSON.parse(localStorage.getItem(uid+'g_missionsStartDoingNow'));
+    g_investmentAutoInvestEnabled = JSON.parse(localStorage.getItem(uid+'g_investmentAutoInvestEnabled'));
+    g_investmentNextCost = JSON.parse(localStorage.getItem(uid+'g_investmentNextCost'));
+    g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem(uid+'g_investmentStartAutoInvestmentNow'));
 
 
 	// Create the sidebar menu
