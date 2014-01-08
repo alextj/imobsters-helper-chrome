@@ -1,20 +1,54 @@
 var options;
 $(document).ready(function() {
 
+    g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem('g_missionsAutoMissionEnabled'));
+    g_missionsNextEnergy = JSON.parse(localStorage.getItem('g_missionsNextEnergy'));
+    g_missionsStartDoingNow = JSON.parse(localStorage.getItem('g_missionsStartDoingNow'));
+    g_investmentAutoInvestEnabled = JSON.parse(localStorage.getItem('g_investmentAutoInvestEnabled'));
+    g_investmentNextCost = JSON.parse(localStorage.getItem('g_investmentNextCost'));
+    g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem('g_investmentStartAutoInvestmentNow'));
+
 	chrome.extension.sendRequest({action: 'gpmeGetOptions'}, function(theOptions) {
 		options = theOptions;
 		init();
 	});
-
 });
 
+function g_save() {
+
+    localStorage.setItem('g_investmentNextCost', JSON.stringify(g_investmentNextCost));
+    localStorage.setItem('g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
+    localStorage.setItem('g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
+    localStorage.setItem('g_investmentStartAutoInvestmentNow', JSON.stringify(g_investmentStartAutoInvestmentNow));
+    localStorage.setItem('g_investmentAutoInvestEnabled', JSON.stringify(g_investmentAutoInvestEnabled));
+    localStorage.setItem('g_missionsAutoMissionEnabled', JSON.stringify(g_missionsAutoMissionEnabled));
+}
+
 function init() {
+
 
 	// Create the sidebar menu
 	create_sidebar();
 
 	// Remove advertisements
 	remove_adverts();
+
+
+    investment_timer_start();
+
+    // Start auto-invest, if autoinvesting is enabled
+    if (g_investmentAutoInvestEnabled === true) {
+        $('#checkbox_auto_invest_enabled').prop('checked', true);
+        investment_run_auto_invest();
+    }
+
+    // Start auto-missions, if auto missions are enabled
+    if (g_missionsAutoMissionEnabled === true) {
+        $('#checkbox_auto_missions_enabled').prop('checked', true);
+        missions_run_auto_missions();
+    }
+
+
 
 	// Attack helper
 	if (options.fight_hide_strong && document.URL.indexOf("fight.php") > 0) {
@@ -34,6 +68,11 @@ function init() {
 	// Investment fix
 	if (document.URL.indexOf("investment.php") > 0) {
 		investment_fixes_init();
+		if (g_investmentStartAutoInvestmentNow) {
+            g_investmentStartAutoInvestmentNow = false;
+            g_save();
+            investment_auto();
+		}
 	}
 
 	// Loot fix

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="imob" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/imob" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../assets/css/bootstrap.css" />
+		<Unit filename="../assets/css/storm8_styles.css" />
+		<Unit filename="../assets/js/jquery.js" />
+		<Unit filename="../assets/js/settings.js" />
+		<Unit filename="../classes/bank/class-bank-auto.js" />
+		<Unit filename="../classes/bank/class-bank-fixes.js" />
+		<Unit filename="../classes/equipment/class-equipment-fixes.js" />
+		<Unit filename="../classes/fight/class-fight-ratios.js" />
+		<Unit filename="../classes/heal/class-heal-auto.js" />
+		<Unit filename="../classes/home/class-home-fixes.js" />
+		<Unit filename="../classes/init.js" />
+		<Unit filename="../classes/investment/class-investment-auto.js" />
+		<Unit filename="../classes/investment/class-investment-fixes.js" />
+		<Unit filename="../classes/invite/class-invite-auto.js" />
+		<Unit filename="../classes/loot/class-loot-fixes.js" />
+		<Unit filename="../classes/misc/class-misc-general.js" />
+		<Unit filename="../classes/misc/class-misc-remove-ads.js" />
+		<Unit filename="../classes/misc/class-misc-sidebar.js" />
+		<Unit filename="../classes/misc/class-misc-spoof-agent.js" />
+		<Unit filename="../fancy-settings/source/css/main.css" />
+		<Unit filename="../fancy-settings/source/css/setting.css" />
+		<Unit filename="../fancy-settings/source/custom.css" />
+		<Unit filename="../fancy-settings/source/i18n.js" />
+		<Unit filename="../fancy-settings/source/index.html" />
+		<Unit filename="../fancy-settings/source/js/classes/fancy-settings.js" />
+		<Unit filename="../fancy-settings/source/js/classes/search.js" />
+		<Unit filename="../fancy-settings/source/js/classes/setting.js" />
+		<Unit filename="../fancy-settings/source/js/classes/tab.js" />
+		<Unit filename="../fancy-settings/source/js/i18n.js" />
+		<Unit filename="../fancy-settings/source/lib/default.css" />
+		<Unit filename="../fancy-settings/source/lib/moo-md5-bundle/String.MD5.js" />
+		<Unit filename="../fancy-settings/source/lib/moo-md5-bundle/String.UTF-8.js" />
+		<Unit filename="../fancy-settings/source/lib/mootools.js" />
+		<Unit filename="../fancy-settings/source/lib/store.js" />
+		<Unit filename="../fancy-settings/source/manifest.js" />
+		<Unit filename="../fancy-settings/source/node_modules/nib/iconic/demo.html" />
+		<Unit filename="../fancy-settings/source/node_modules/nib/iconic/iconic.css" />
+		<Unit filename="../fancy-settings/source/node_modules/nib/lib/nib.js" />
+		<Unit filename="../fancy-settings/source/node_modules/nib/lib/nodes/color-image.js" />
+		<Unit filename="../fancy-settings/source/node_modules/nib/lib/nodes/gradient.js" />
+		<Unit filename="../fancy-settings/source/settings.js" />
+		<Unit filename="../popup/assets/css/popup.css" />
+		<Unit filename="../popup/assets/js/jquery.md5.js" />
+		<Unit filename="../popup/assets/js/popup.js" />
+		<Unit filename="../popup/popup.html" />
+		<Unit filename="../updates.xml" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

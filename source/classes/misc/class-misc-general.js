@@ -10,6 +10,16 @@ function get_current_cash() {
 }
 
 /**
+ * Current amount of energy.
+ *
+ * @return {float} Numerical value of energy.
+ */
+
+function get_current_energy() {
+    return format_number($('#energyCurrent').text());
+}
+
+/**
  * Level of the user.
  * @return {string} Level represented as a string.
  */

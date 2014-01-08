@@ -16,6 +16,22 @@ function create_sidebar() {
 	}
 
 	$(document.createElement('ul')).addClass('helper_sideBar').html(nav).appendTo('body');
+	$(document.createElement('div')).addClass('helper_sideBar2').html(
+        '<p>Next inv cost: $' + g_investmentNextCost + '</p>' +
+        '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
+        '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
+        '<p>test</p>'
+    ).appendTo('body');
+
+    $('#checkbox_auto_invest_enabled').change(function(){
+        g_investmentAutoInvestEnabled = this.checked ? true : false;
+        g_save();
+    });
+
+    $('#checkbox_auto_missions_enabled').change(function(){
+        g_missionsAutoMissionEnabled = this.checked ? true : false;
+        g_save();
+    });
 
 }
 

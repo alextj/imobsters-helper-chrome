@@ -51,6 +51,9 @@
             // Heal
             "classes/heal/class-heal-auto.js",
 
+            // Missions
+            "classes/missions/class-missions-auto.js",
+
             // FOR SPARTA
             "classes/init.js"
         ],

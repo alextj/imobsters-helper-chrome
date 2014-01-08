@@ -2,6 +2,40 @@
  * Init for purchasing real estate.
  */
 
+var investment_timer = 0;
+
+function investment_timer_start() {
+    investment_timer = setInterval(investment_timer_tick, 2000);
+}
+
+function investment_timer_tick() {
+    investment_run_auto_invest();
+}
+
+function investment_timer_stop() {
+    clearInterval(investment_timer);
+}
+
+function investment_run_auto_invest() {
+
+    if (g_investmentAutoInvestEnabled === true) {
+        // Cash on hand
+        var spendingAmount = get_current_cash();
+
+        if (spendingAmount > g_investmentNextCost) {
+            investment_load_page_and_invest();
+        }
+	}
+}
+
+// Open Investment page and start auto-investing
+function investment_load_page_and_invest() {
+
+    window.location.href = 'investment.php';
+    g_investmentStartAutoInvestmentNow = true;
+    g_save();
+}
+
 function investment_auto() {
 
 	if (!invest_verify()) {
@@ -51,8 +85,8 @@ function invest_verify() {
 	}
 
 	if (document.URL.indexOf("investment.php") < 1) {
-		alert("Action failed. You must be on the investment page to use this button");
-		return false;
+        // Automatically move to investment page if not already there
+        investment_load_page_and_invest();
 	}
 
 	// Assuming all is well
@@ -112,6 +146,8 @@ function invest_calculations() {
 
 		// We ran out of funds! We're done here
 		if ((totalCost + costOfminRoi) > spendingAmount) {
+            g_investmentNextCost = costOfminRoi;
+            g_save();
 			return {
 				'buyThese': buyThese,
 				'newIncome': newIncome,

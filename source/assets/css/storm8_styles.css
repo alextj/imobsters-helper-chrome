@@ -3,7 +3,17 @@ body{background-color:black !important;}
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
-	width: 100px;
+	width: 80px;
+	height: 100%;
+	padding: 0;
+	background-color: '#2d2d2d';
+}
+
+.helper_sideBar2 {
+	position: fixed;
+	bottom: 0px;
+	left: 100px;
+	width: 150px;
 	height: 100%;
 	padding: 0;
 	background-color: '#2d2d2d';

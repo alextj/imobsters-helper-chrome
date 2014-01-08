@@ -135,7 +135,7 @@ function init() {
 		} else {
 
 			var params = {
-				'version': '1.74',
+				'version': '1.85',
 				'udid': udid,
 				'pf': pf
 			};
