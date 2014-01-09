@@ -15,6 +15,7 @@ $(document).ready(function() {
 function g_save() {
 
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
+    localStorage.setItem(uid+'g_missionsAutoHealingEnabled', JSON.stringify(g_missionsAutoHealingEnabled));
     localStorage.setItem(uid+'g_investmentNextCost', JSON.stringify(g_investmentNextCost));
     localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
     localStorage.setItem(uid+'g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
@@ -27,6 +28,7 @@ function g_save() {
 function init() {
 
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
+    g_missionsAutoHealingEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoHealingEnabled'));
     g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));
     g_missionsNextEnergy = JSON.parse(localStorage.getItem(uid+'g_missionsNextEnergy'));
     g_missionsStartDoingNow = JSON.parse(localStorage.getItem(uid+'g_missionsStartDoingNow'));
@@ -56,6 +58,11 @@ function init() {
     if (g_missionsAutoMissionEnabled === true) {
         $('#checkbox_auto_missions_enabled').prop('checked', true);
         missions_run_auto_missions();
+    }
+
+    // Check auto heraling checkbox, if auto healing is enabled
+    if (g_missionsAutoHealingEnabled === true) {
+        $('#checkbox_auto_healing_enabled').prop('checked', true);
     }
 
 
@@ -114,7 +121,7 @@ function init() {
 	});
 
 	// Do auto heal
-	if (options.heal_auto) {
+	if (g_missionsAutoHealingEnabled) {
 
 		var health = $('#healthCurrent').text().trim();
 		var maxHealth = $('#healthMax').text().trim();

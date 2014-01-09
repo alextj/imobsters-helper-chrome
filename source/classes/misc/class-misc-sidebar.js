@@ -17,10 +17,11 @@ function create_sidebar() {
 
 	$(document.createElement('ul')).addClass('helper_sideBar').html(nav).appendTo('body');
 	$(document.createElement('div')).addClass('helper_sideBar2').html(
-        '<p>Next inv cost: $' + g_investmentNextCost + '</p>' +
+        '<p>Next investment cost: $' + g_investmentNextCost + '</p>' +
+        '<p>Next mission requires: ' + g_missionsNextEnergy + ' e</p>' +
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
-        '<p>test</p>'
+        '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>'
     ).appendTo('body');
 
     $('#checkbox_auto_invest_enabled').change(function(){
@@ -30,6 +31,11 @@ function create_sidebar() {
 
     $('#checkbox_auto_missions_enabled').change(function(){
         g_missionsAutoMissionEnabled = this.checked ? true : false;
+        g_save();
+    });
+
+    $('#checkbox_auto_healing_enabled').change(function(){
+        g_missionsAutoHealingEnabled = this.checked ? true : false;
         g_save();
     });
 
