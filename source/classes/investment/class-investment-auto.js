@@ -38,6 +38,25 @@ function investment_load_page_and_invest() {
 
 function investment_auto() {
 
+    var estateNames = [
+        "Street Vendor",
+        "Shack",
+        "Convenience Store",
+        "Restaurant",
+        "Night Club",
+        "Luxury Condos",
+        "Shopping Mall",
+        "Resort Hotel",
+        "Office Tower",
+        "Casino",
+        "Amusement Park",
+        "Horse Racing Circuit",
+        "Professional Basketball Team",
+        "Television Studio  ",
+        "Auction House",
+        "Record Label",
+    ];
+
 	if (!invest_verify()) {
 		return false;
 	}
@@ -46,7 +65,7 @@ function investment_auto() {
 
 	var buyThese = data['buyThese'];
 	var formNonce = invest_find_formnonce();
-
+    var itemsBought = 0;
 	for (var index in buyThese) {
 
 		var amount = buyThese[index];
@@ -57,10 +76,15 @@ function investment_auto() {
 		}
 
 		invest_purchase(parseInt(index) + 1, amount, formNonce);
-
+        log_write("Investment: purchased " + amount + "x " + estateNames[index]);
+        itemsBought++;
 	}
-
-	alert("Newly gained income: " + numberWithCommas(data['newIncome']) + "\n\nTotal money spent: " + numberWithCommas(data['totalCost']));
+    if (itemsBought > 0) {
+        var cost = invest_find_estate_data('.reBuyAction .cash > span');
+        var nextName = estateNames[data['nextItemIndex']];
+        var nextCost = cost[data['nextItemIndex']];
+        log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
+	}
 }
 
 /**
@@ -151,7 +175,8 @@ function invest_calculations() {
 			return {
 				'buyThese': buyThese,
 				'newIncome': newIncome,
-				'totalCost': totalCost
+				'totalCost': totalCost,
+				'nextItemIndex' : minRoiIndex
 			};
 		}
 

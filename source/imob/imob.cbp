@@ -35,6 +35,7 @@
 		<Unit filename="../classes/invite/class-invite-auto.js" />
 		<Unit filename="../classes/loot/class-loot-fixes.js" />
 		<Unit filename="../classes/misc/class-misc-general.js" />
+		<Unit filename="../classes/misc/class-misc-log.js" />
 		<Unit filename="../classes/misc/class-misc-remove-ads.js" />
 		<Unit filename="../classes/misc/class-misc-sidebar.js" />
 		<Unit filename="../classes/misc/class-misc-spoof-agent.js" />
@@ -60,6 +61,7 @@
 		<Unit filename="../fancy-settings/source/node_modules/nib/lib/nodes/color-image.js" />
 		<Unit filename="../fancy-settings/source/node_modules/nib/lib/nodes/gradient.js" />
 		<Unit filename="../fancy-settings/source/settings.js" />
+		<Unit filename="../manifest.json" />
 		<Unit filename="../popup/assets/css/popup.css" />
 		<Unit filename="../popup/assets/js/jquery.md5.js" />
 		<Unit filename="../popup/assets/js/popup.js" />

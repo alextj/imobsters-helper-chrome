@@ -24,6 +24,7 @@
             "classes/misc/class-misc-general.js",
             "classes/misc/class-misc-remove-ads.js",
             "classes/misc/class-misc-sidebar.js",
+            "classes/misc/class-misc-log.js",
 
             // Bank
             "classes/bank/class-bank-auto.js",

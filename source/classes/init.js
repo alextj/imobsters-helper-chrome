@@ -14,6 +14,7 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
     localStorage.setItem(uid+'g_investmentNextCost', JSON.stringify(g_investmentNextCost));
     localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
     localStorage.setItem(uid+'g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
@@ -24,6 +25,7 @@ function g_save() {
 
 function init() {
 
+    g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
     g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));
     g_missionsNextEnergy = JSON.parse(localStorage.getItem(uid+'g_missionsNextEnergy'));
     g_missionsStartDoingNow = JSON.parse(localStorage.getItem(uid+'g_missionsStartDoingNow'));
