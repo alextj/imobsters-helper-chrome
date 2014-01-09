@@ -39,6 +39,7 @@
 		<Unit filename="../classes/misc/class-misc-remove-ads.js" />
 		<Unit filename="../classes/misc/class-misc-sidebar.js" />
 		<Unit filename="../classes/misc/class-misc-spoof-agent.js" />
+		<Unit filename="../classes/missions/class-missions-auto.js" />
 		<Unit filename="../fancy-settings/source/css/main.css" />
 		<Unit filename="../fancy-settings/source/css/setting.css" />
 		<Unit filename="../fancy-settings/source/custom.css" />

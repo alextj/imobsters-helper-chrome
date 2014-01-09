@@ -21,6 +21,7 @@ function g_save() {
     localStorage.setItem(uid+'g_investmentStartAutoInvestmentNow', JSON.stringify(g_investmentStartAutoInvestmentNow));
     localStorage.setItem(uid+'g_investmentAutoInvestEnabled', JSON.stringify(g_investmentAutoInvestEnabled));
     localStorage.setItem(uid+'g_missionsAutoMissionEnabled', JSON.stringify(g_missionsAutoMissionEnabled));
+    localStorage.setItem(uid+'g_missionsCurrentCat', JSON.stringify(g_missionsCurrentCat));
 }
 
 function init() {
@@ -32,6 +33,7 @@ function init() {
     g_investmentAutoInvestEnabled = JSON.parse(localStorage.getItem(uid+'g_investmentAutoInvestEnabled'));
     g_investmentNextCost = JSON.parse(localStorage.getItem(uid+'g_investmentNextCost'));
     g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem(uid+'g_investmentStartAutoInvestmentNow'));
+    g_missionsCurrentCat = JSON.parse(localStorage.getItem(uid+'g_missionsCurrentCat'));
 
 
 	// Create the sidebar menu
@@ -42,6 +44,7 @@ function init() {
 
 
     investment_timer_start();
+    missions_timer_start();
 
     // Start auto-invest, if autoinvesting is enabled
     if (g_investmentAutoInvestEnabled === true) {
