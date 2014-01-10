@@ -17,8 +17,8 @@ function create_sidebar() {
 
 	$(document.createElement('ul')).addClass('helper_sideBar').html(nav).appendTo('body');
 	$(document.createElement('div')).addClass('helper_sideBar2').html(
-        '<p>Next investment cost: $' + g_investmentNextCost + '</p>' +
-        '<p>Next mission requires: ' + g_missionsNextEnergy + ' e</p>' +
+        '<p id="sidebar_investment_cost">Next investment cost: $' + g_investmentNextCost + '</p>' +
+        '<p id="sidebar_mission_req_energy">Next mission requires: ' + g_missionsNextEnergy + ' e</p>' +
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
         '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>'
@@ -39,6 +39,11 @@ function create_sidebar() {
         g_save();
     });
 
+}
+
+function sidebar_update_status() {
+    $('#sidebar_investment_cost').text('Next investment cost: $' + g_investmentNextCost);
+    $('#sidebar_mission_req_energy').text('Next mission requires: ' + g_missionsNextEnergy + ' e');
 }
 
 /**

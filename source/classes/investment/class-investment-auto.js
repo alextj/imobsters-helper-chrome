@@ -172,6 +172,7 @@ function invest_calculations() {
 		if ((totalCost + costOfminRoi) > spendingAmount) {
             g_investmentNextCost = costOfminRoi;
             g_save();
+            sidebar_update_status();
 			return {
 				'buyThese': buyThese,
 				'newIncome': newIncome,

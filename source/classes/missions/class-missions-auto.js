@@ -64,6 +64,7 @@ function missions_do() {
     if (currentEnergy < reqEnergy) {
         g_missionsNextEnergy = reqEnergy;
         g_save();
+        sidebar_update_status();
         return false;
     }
 
