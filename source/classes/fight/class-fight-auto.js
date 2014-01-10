@@ -106,8 +106,8 @@ function fight_do() {
 				
 				var mob_name = fight_mob_name(index);
 				log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
-				fight_attack_mob(index);
 				fight_add_mob_to_attacked_list(mob_id);
+				fight_attack_mob(index);
 				// return false to break from each loop
 				return false;
 			} else {
@@ -157,6 +157,11 @@ function fight_mob_not_attacked_before(mob_id) {
 	return not_attacked;
 }
 
+function fight_reset_fight_count() {
+	g_totalFights = 0;
+	g_lostFights = 0;
+}
+
 function fight_get_fight_result() {
 	/*
 	<div id="fightResult">
@@ -171,9 +176,33 @@ function fight_get_fight_result() {
     		<div style="height:12px"></div>
     		<span class="lostFight">You lost the fight</span>
 	*/
+	if (g_totalFights == null) {
+		g_totalFights = 0;
+	}
+	if (g_lostFights == null) {
+		g_lostFights = 0;
+	}
+	var hasWon = false;
 	if ($('#fightResult > div').first().attr("class") == "messageBoxSuccess") {
-		log_write("Fight: won");
+		hasWon = true;
 	} else {
-		log_write("Fight: LOST!");
+	}
+
+	g_totalFights++;
+	if (hasWon == false) {
+		g_lostFights++;
+	}
+
+	var percentage = g_lostFights * 100 / g_totalFights;
+	if (hasWon) {
+		log_write("Fight: won (" + percentage + "% lost total)");
+	} else {
+		log_write("Fight: LOST! (" + percentage + "% lost total)");
+	}
+
+	if (g_totalFights > 10 && percentage > 10) {
+		log_write("Fight: auto-fight stopped, losing percentage too high (" + percentage + "% lost total)");
+		g_fightAutoFightEnabled = false;
+		g_save();
 	}
 }
