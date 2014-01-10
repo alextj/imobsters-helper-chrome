@@ -60,16 +60,21 @@ function missions_do() {
     }
 
     var reqEnergy = mission_get_mission_energy(nextMission);
-    var currentEnergy = get_current_energy();
-    if (currentEnergy < reqEnergy) {
+	if (reqEnergy != g_missionsNextEnergy) {
+		// Update sideback with new energy requirement
         g_missionsNextEnergy = reqEnergy;
         g_save();
         sidebar_update_status();
+	}
+	
+    var currentEnergy = get_current_energy();
+    if (currentEnergy < reqEnergy) {
+		// There is not enough energy to do the mission - quit
         return false;
     }
-
-    var nextMissionCode = mission_get_action_link(nextMission);
-    eval(nextMissionCode);
+	
+	// There is enough energy - do the mission
+    mission_do_mission(nextMission);
 }
 
 function missions_load_page_and_do() {
@@ -80,7 +85,10 @@ function missions_load_page_and_do() {
 }
 
 function missions_current_rank() {
-    var rankText = $('.masteryBarProgress > span').first().html();
+	// Get the rank of the last mission on the page
+	// beacause the missions are done is order, this means that all the other
+	// missions on the page have either same or higher rank.
+    var rankText = $('.masteryBarProgress > span').last().html();
     return parseInt(rankText.slice(-1), 10);
 }
 
@@ -102,8 +110,6 @@ function mission_get_mission_energy(index) {
     return reqEnergy;
 }
 
-function mission_get_action_link(index) {
-    var link = 0;
+function mission_do_mission(index) {
     $('.actionButton').get(index).click();
-    return link;
 }
