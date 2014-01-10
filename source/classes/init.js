@@ -48,6 +48,11 @@ function init() {
 
 	// Remove advertisements
 	remove_adverts();
+	
+	// If fighting, get fight result
+	if (document.URL.indexOf("fight.php?action=fight") > 0) {
+		fight_get_fight_result();
+	}
 
 
     investment_timer_start();
@@ -83,11 +88,6 @@ function init() {
 	if (options.fight_hide_strong && document.URL.indexOf("fight.php") > 0) {
 		fight_helper_init();
 	} */
-	
-	// If fighting, get fight result
-	if (document.URL.indexOf("fight.php?action=fight") > 0) {
-		fight_get_fight_result();
-	}
 
 	// Home fix
 	if (document.URL.indexOf("home.php") > 0) {
