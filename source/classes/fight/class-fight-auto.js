@@ -65,7 +65,7 @@ function fight_run_auto_fight() {
 		if (is_in_hospital()) {
 			// Initialize minimum stamina if it was never set
 			if (g_fightMinStaminaToHeal == null) {
-				g_fightMinStaminaToHeal = 3;
+				g_fightMinStaminaToHeal = 5;
 			}
 			if (currentStamina < g_fightMinStaminaToHeal) {
 				// Not enough stamina to heal, wait for more stamina
@@ -140,7 +140,7 @@ function fight_attack_mob(index) {
 }
 function fight_add_mob_to_attacked_list(mob_id) {
 	g_foughtMobsters.push(mob_id);
-	if (g_foughtMobsters.length > 10) {
+	if (g_foughtMobsters.length > 20) {
 		// Queue maximum size reached, remove the oldest mob_id form the list
 		g_foughtMobsters.shift();
 	}
