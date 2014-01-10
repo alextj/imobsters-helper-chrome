@@ -46,7 +46,6 @@ Smart use of health - result monitoring:
 var fight_timer = 0;
 // TODO: get mob size dynamically
 var mob_size = 4;
-var fought_mobs = [];
 
 function fight_timer_start() {
     fight_timer = setInterval(fight_timer_tick, 10000);
@@ -90,6 +89,9 @@ function fight_run_auto_fight() {
 }
 
 function fight_do() {
+	if (g_foughtMobsters == null) {
+		g_foughtMobsters = [];
+	}
     if (document.URL.indexOf("fight.php") < 1) {
         // Automatically move to fight page if not already there
         window.location.href = 'fight.php';
@@ -137,17 +139,17 @@ function fight_attack_mob(index) {
     $('.fightAction > a').get(index).click();
 }
 function fight_add_mob_to_attacked_list(mob_id) {
-	fought_mobs.push(mob_id);
-	if (fought_mobs.length > 10) {
+	g_foughtMobsters.push(mob_id);
+	if (g_foughtMobsters.length > 10) {
 		// Queue maximum size reached, remove the oldest mob_id form the list
-		fought_mobs.shift();
+		g_foughtMobsters.shift();
 	}
 }
 
 function fight_mob_not_attacked_before(mob_id) {
 	var not_attacked = true;
-	for (var i = 0; i < fought_mobs.length; i++) {
-		if (fought_mobs[i] == mob_id) {
+	for (var i = 0; i < g_foughtMobsters.length; i++) {
+		if (g_foughtMobsters[i] == mob_id) {
 			not_attacked = false;
 			break;
 		}

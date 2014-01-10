@@ -15,6 +15,7 @@ $(document).ready(function() {
 function g_save() {
 
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
+    localStorage.setItem(uid+'g_foughtMobsters', JSON.stringify(g_foughtMobsters));
     localStorage.setItem(uid+'g_fightMinStaminaToHeal', JSON.stringify(g_fightMinStaminaToHeal));
     localStorage.setItem(uid+'g_fightAutoFightEnabled', JSON.stringify(g_fightAutoFightEnabled));
     localStorage.setItem(uid+'g_missionsAutoHealingEnabled', JSON.stringify(g_missionsAutoHealingEnabled));
@@ -30,6 +31,7 @@ function g_save() {
 function init() {
 
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
+    g_foughtMobsters = JSON.parse(localStorage.getItem(uid+'g_foughtMobsters'));
     g_fightMinStaminaToHeal = JSON.parse(localStorage.getItem(uid+'g_fightMinStaminaToHeal'));
     g_fightAutoFightEnabled = JSON.parse(localStorage.getItem(uid+'g_fightAutoFightEnabled'));
     g_missionsAutoHealingEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoHealingEnabled'));
