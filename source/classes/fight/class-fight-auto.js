@@ -17,6 +17,7 @@ Usage of auto-attack timer:
  - At least 10 seconds interval
  - 
 
+Keep track of fight results
 
 -----------------------------------
 Auto-fighting - Normal mob attack (no hitlist attack) Version 1.1
@@ -45,6 +46,7 @@ Smart use of health - result monitoring:
 var fight_timer = 0;
 // TODO: get mob size dynamically
 var mob_size = 4;
+var fought_mobs = [];
 
 function fight_timer_start() {
     fight_timer = setInterval(fight_timer_tick, 10000);
@@ -78,11 +80,9 @@ function fight_run_auto_fight() {
 		} else {
 			if (currentStamina > 0) {
 				// Find someone to attack now!
-				log_write('Going to fight!');
 				fight_do();
 			} else {
 				// Wait till there is enough stamina
-				log_write('No stamina, waiting');
 				return false;
 			}
 		}
@@ -99,12 +99,18 @@ function fight_do() {
 		var thisMobSize = $(this).text().trim();
 		if (thisMobSize <= mob_size - 3) {
 			// Small enough to attack
-			var mob_name = fight_mob_name(index);
 			var mob_id = fight_mob_id(index);
-			log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
-			fight_attack_mob(index);
-			// return false to break from each loop
-			return false;
+			if (fight_mob_not_attacked_before(mob_id)) {
+				
+				var mob_name = fight_mob_name(index);
+				log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
+				fight_attack_mob(index);
+				fight_add_mob_to_attacked_list(mob_id);
+				// return false to break from each loop
+				return false;
+			} else {
+				// This mob was recentyl attacked, skip it
+			}
 		} else {
 			// This mob is too big, skip it
 		}
@@ -129,4 +135,43 @@ function fight_mob_name(index) {
 }
 function fight_attack_mob(index) {
     $('.fightAction > a').get(index).click();
+}
+function fight_add_mob_to_attacked_list(mob_id) {
+	fought_mobs.push(mob_id);
+	if (fought_mobs.length > 10) {
+		// Queue maximum size reached, remove the oldest mob_id form the list
+		fought_mobs.shift();
+	}
+}
+
+function fight_mob_not_attacked_before(mob_id) {
+	var not_attacked = true;
+	for (var i = 0; i < fought_mobs.length; i++) {
+		if (fought_mobs[i] == mob_id) {
+			not_attacked = false;
+			break;
+		}
+	}
+	return not_attacked;
+}
+
+function fight_get_fight_result() {
+	/*
+	<div id="fightResult">
+    	<div class="messageBoxSuccess">
+    		<span class="success">Eccellente!</span>
+    		<div style="height:12px"></div>
+    		<span class="wonFight">You won the fight</span>
+	
+	<div id="fightResult">
+    	<div class="messageBoxFail" style="width: 92%">
+    		<span class="fail">Insuccesso...</span>
+    		<div style="height:12px"></div>
+    		<span class="lostFight">You lost the fight</span>
+	*/
+	if ($('#fightResult > div').first().attr("class") == "messageBoxSuccess") {
+		log_write("Fight: won");
+	} else {
+		log_write("Fight: LOST!");
+	}
 }

@@ -53,7 +53,7 @@ function bank_deposit(amount) {
 	}
 	
 	if (amount > curCash) {
-		alert("Deposit failed. You have no cash to bank!");
+		log_write("Deposit failed. Not enough cash!");
 		return false;
 	}
 
@@ -61,7 +61,7 @@ function bank_deposit(amount) {
 		depositAmount: amount,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		alert("Success! Amount deposited: " + numberWithCommas(amount));
+		log_write("Success! Amount deposited: " + numberWithCommas(amount));
 		return true;
 	});
 
@@ -86,7 +86,7 @@ function bank_deposit_after_tax(amount) {
 	var curCash = get_current_cash();
 	
 	if (requiredCash > curCash) {
-		alert("Deposit failed. You have no cash to bank!");
+		log_write("Deposit: failed. Not enough cash!");
 		return false;
 	}
 
@@ -94,7 +94,7 @@ function bank_deposit_after_tax(amount) {
 		depositAmount: requiredCash,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		alert("Success! Amount deposited: " + numberWithCommas(amount));
+		log_write("Deposit: Success! Amount deposited: " + numberWithCommas(amount));
 		return true;
 	});
 
