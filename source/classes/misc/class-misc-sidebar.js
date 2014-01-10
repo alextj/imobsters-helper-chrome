@@ -19,10 +19,13 @@ function create_sidebar() {
 	$(document.createElement('div')).addClass('helper_sideBar2').html(
         '<p id="sidebar_investment_cost">Next investment cost: $' + g_investmentNextCost + '</p>' +
         '<p id="sidebar_mission_req_energy">Next mission requires: ' + g_missionsNextEnergy + ' e</p>' +
+        '<p id="sidebar_fighting_status"></p>' +
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
-        '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>'
+        '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>' +
+        '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>'
     ).appendTo('body');
+	$(document.createElement('div')).attr("id","log_window").html(g_log).appendTo('body');
 
     $('#checkbox_auto_invest_enabled').change(function(){
         g_investmentAutoInvestEnabled = this.checked ? true : false;
@@ -39,11 +42,18 @@ function create_sidebar() {
         g_save();
     });
 
+    $('#checkbox_auto_fighting_enabled').change(function(){
+        g_fightAutoFightEnabled = this.checked ? true : false;
+        g_save();
+    });
 }
 
 function sidebar_update_status() {
     $('#sidebar_investment_cost').text('Next investment cost: $' + g_investmentNextCost);
     $('#sidebar_mission_req_energy').text('Next mission requires: ' + g_missionsNextEnergy + ' e');
+}
+function sidebar_update_fighting_status(message) {
+    $('#sidebar_fighting_status').text('Fighting: ' + message);
 }
 
 /**

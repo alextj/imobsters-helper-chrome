@@ -3,11 +3,11 @@
  */
 
 function heal_auto() {
-
+	heal_error_not_enough_money = false;
 	if (!heal_verify()) {
 		return false;
 	}
-
+	
 	heal_find_button();
 
 }
@@ -23,16 +23,12 @@ function heal_verify() {
 	var level = get_current_level();
 
 	if (!level) {
-		if (!options.heal_ninja) {
-			alert("Action failed. Level could not be found.")
-		}
+		log_write("Healing: Action failed. Level could not be found.");
 		return false;
 	}
 
 	if (level < 5) {
-		if (!options.heal_ninja) {
-			alert("Action failed. You must be level 5+ to heal.")
-		}
+		log_write("Healing: Action failed. You must be level 5+ to heal.");
 		return false;
 	}
 
@@ -63,10 +59,12 @@ function heal_process(data) {
 		var cost = $(healButton).find('.healActionInner > span').text();
 		var cash = $(data).find('.hospitalText .cash').text();
 
-		if (format_number(cash) < format_number(cost)) {
-			if (!options.heal_ninja) {
-				alert("Failed. You don't have enough money in the bank to pay for that.")
-			}
+		var iCost = format_number(cost);
+		var iBank = format_number(cash);
+		var iDiff = iCost - iBank;
+		if (iBank < iCost) {
+			log_write("Healing: not enough money in bank to heal - depositing " + iDiff);
+			bank_deposit_after_tax(iDiff);
 			return false;
 		} else {
 			$.get(url, function(data) {
@@ -75,10 +73,8 @@ function heal_process(data) {
 		}
 
 	} else {
-		if (!options.heal_ninja) {
-			var text = $(data).find('.hospitalText').text();
-			alert('Failed. ' + text);
-		}
+		var text = $(data).find('.hospitalText').text();
+		log_write('Healing: Failed. ' + text);
 		return false;
 	}
 
@@ -91,14 +87,11 @@ function heal_check_success(data, cost) {
 	var failedText = $(data).find('.messageBoxFail').text();
 
 	if (failedText) {
-		if (!options.heal_ninja) {
-			alert("Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
-		}
+		log_write("Healing: Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
 		return false;
 	} else {
-		if (!options.heal_ninja) {
-			alert('Success. Healed for: ' + cost);
-		}
+		log_write('Healing: Success. Healed for: ' + cost);
+		location.reload();
 		return true;
 	}
 

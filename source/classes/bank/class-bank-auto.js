@@ -45,13 +45,15 @@ function bank_verify() {
 
 function bank_deposit(amount) {
 
-	if (amount === 0) {
-		alert("Deposit failed. You have no cash to bank!")
+	var curCash = get_current_cash();
+
+	if (!amount || amount === 0) {
+		alert("Deposit failed. Could not find cash value.");
 		return false;
 	}
-
-	if (!amount) {
-		alert("Deposit failed. Could not find cash value.");
+	
+	if (amount > curCash) {
+		alert("Deposit failed. You have no cash to bank!");
 		return false;
 	}
 
@@ -65,4 +67,36 @@ function bank_deposit(amount) {
 
 	return false;
 
+}
+
+function bank_deposit_after_tax(amount) {
+
+	if (!amount || amount === 0) {
+		alert("Deposit failed. Could not find cash value.");
+		return false;
+	}
+	/*
+	if deposited amount is 100,
+	10% is taken, which is 10.
+	So the deposited money is 90.
+	x = in * 0.9
+	in = x / 0.9
+	*/
+	var requiredCash = amount / 0.9 + 1;
+	var curCash = get_current_cash();
+	
+	if (requiredCash > curCash) {
+		alert("Deposit failed. You have no cash to bank!");
+		return false;
+	}
+
+	$.post('bank.php', {
+		depositAmount: requiredCash,
+		action: 'Deposit'
+	}, function(data, textStatus, xhr) {
+		alert("Success! Amount deposited: " + numberWithCommas(amount));
+		return true;
+	});
+
+	return false;
 }

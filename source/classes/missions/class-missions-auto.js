@@ -10,7 +10,7 @@
 var missions_timer = 0;
 
 function missions_timer_start() {
-    missions_timer = setInterval(missions_timer_tick, 2000);
+    missions_timer = setInterval(missions_timer_tick, 10000);
 }
 
 function missions_timer_tick() {
@@ -55,7 +55,7 @@ function missions_do() {
     var nextMission = missions_next_mission();
 
     if (nextMission == -1) {
-        log_write("Missions: no available missions to do");
+        log_write("Missions: no available missions to do *******");
         return false;
     }
 
@@ -74,6 +74,7 @@ function missions_do() {
     }
 	
 	// There is enough energy - do the mission
+	log_write("Missions: Doing mission")
     mission_do_mission(nextMission);
 }
 

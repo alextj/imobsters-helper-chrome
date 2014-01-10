@@ -5,7 +5,7 @@
 var investment_timer = 0;
 
 function investment_timer_start() {
-    investment_timer = setInterval(investment_timer_tick, 2000);
+    investment_timer = setInterval(investment_timer_tick, 10000);
 }
 
 function investment_timer_tick() {

@@ -46,8 +46,9 @@
             // Invite
             "classes/invite/class-invite-auto.js",
 
-            // Attack ratios
+            // Fighting related
             "classes/fight/class-fight-ratios.js",
+            "classes/fight/class-fight-auto.js",
 
             // Heal
             "classes/heal/class-heal-auto.js",

@@ -14,7 +14,7 @@ Who to attack:
  - If there is no suitable mobster to attack, refresh the list and try again.
 
 Usage of auto-attack timer:
- - At least 10 seconds interval (2 minute interval is probably best after debugging is done).
+ - At least 10 seconds interval
  - 
 
 
@@ -22,13 +22,111 @@ Usage of auto-attack timer:
 Auto-fighting - Normal mob attack (no hitlist attack) Version 1.1
 
 Smart use of health (stay in hospital tactic):
- - If not in hospital - attack as soon as there is any Stamina.
- - If in hospital - heal only when there is enough Stamina to put us back into hospital (~10 Stamina for starters).
+ - If not in hospital
+   + Attack as soon as there is any Stamina.
+ - If in hospital
+   + Heal only when there is enough Stamina to put us back into hospital (~10 Stamina for starters).
 
-Smart use of health - monitoring:
+Smart user of health - checking if in hospital
+ - Check if health is less than N.
+   + N depends on maximum health. N can be found manually by trying and then hardcoded.
+     - 26 is in hospital
+     - 27 is out of hospital
+   + The only maximum health supported is 100, because increasing it is useless.
+
+Smart use of health - result monitoring:
  - If we don't end up in hospital immediately after healing and attacking with a set number of Stamina
    + Increase the number of Stamina required to heal by 1
  - If we end up in hospital with more than 3 stamina
    + Decrease the number of Stamina required to heal by 1
 
 */
+
+var fight_timer = 0;
+// TODO: get mob size dynamically
+var mob_size = 4;
+
+function fight_timer_start() {
+    fight_timer = setInterval(fight_timer_tick, 10000);
+}
+
+function fight_timer_tick() {
+    fight_run_auto_fight();
+}
+
+function fight_timer_stop() {
+    clearInterval(fight_timer);
+}
+
+function fight_run_auto_fight() {
+    if (g_fightAutoFightEnabled === true) {
+		var currentStamina = get_current_stamina();
+		if (is_in_hospital()) {
+			// Initialize minimum stamina if it was never set
+			if (g_fightMinStaminaToHeal == null) {
+				g_fightMinStaminaToHeal = 3;
+			}
+			if (currentStamina < g_fightMinStaminaToHeal) {
+				// Not enough stamina to heal, wait for more stamina
+				log_write('In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+				return false;
+			} else {
+				// There is enough stamina - heal now and fight!
+				log_write('In hospital, healing!');
+				heal_auto();
+			}
+		} else {
+			if (currentStamina > 0) {
+				// Find someone to attack now!
+				log_write('Going to fight!');
+				fight_do();
+			} else {
+				// Wait till there is enough stamina
+				log_write('No stamina, waiting');
+				return false;
+			}
+		}
+    }
+}
+
+function fight_do() {
+    if (document.URL.indexOf("fight.php") < 1) {
+        // Automatically move to fight page if not already there
+        window.location.href = 'fight.php';
+        return false;
+	}
+	$('.fightMobSize').each(function(index) {
+		var thisMobSize = $(this).text().trim();
+		if (thisMobSize <= mob_size - 3) {
+			// Small enough to attack
+			var mob_name = fight_mob_name(index);
+			var mob_id = fight_mob_id(index);
+			log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
+			fight_attack_mob(index);
+			// return false to break from each loop
+			return false;
+		} else {
+			// This mob is too big, skip it
+		}
+	});
+}
+function fight_mob_id(index) {
+	var mob_id = 0;
+	var link_text = $('.fightMobster > div > a').eq(index).attr("href");
+	var start = link_text.indexOf("puid=");
+	if (start > 0) {
+		start = start + ("puid=").length;
+		var end = link_text.indexOf("&", start);
+		if (end < 0) {
+			end = link_text.length;
+		}
+		mob_id = link_text.substring(start, end);
+	}
+	return mob_id;
+}
+function fight_mob_name(index) {
+	return $('.fightMobster > div > a').eq(index).text().trim();
+}
+function fight_attack_mob(index) {
+    $('.fightAction > a').get(index).click();
+}

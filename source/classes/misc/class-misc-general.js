@@ -20,12 +20,39 @@ function get_current_energy() {
 }
 
 /**
+ * Current amount of stamina.
+ *
+ * @return {float} Numerical value of stamina.
+ */
+
+function get_current_stamina() {
+    return format_number($('#staminaCurrent').text());
+}
+
+/**
  * Level of the user.
  * @return {string} Level represented as a string.
  */
 
 function get_current_level() {
 	return $('.levelFrontTopArea').text();
+}
+
+function get_current_health() {
+	var health = $('#healthCurrent').text().trim();
+	return health;
+}
+
+function set_current_health(health) {
+	$('#healthCurrent').text(health);
+}
+
+function is_in_hospital() {
+	var health = get_current_health();
+	if (health < 27) {
+		return true;
+	}
+	return false;
 }
 
 /**

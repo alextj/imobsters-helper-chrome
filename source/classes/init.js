@@ -15,6 +15,8 @@ $(document).ready(function() {
 function g_save() {
 
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
+    localStorage.setItem(uid+'g_fightMinStaminaToHeal', JSON.stringify(g_fightMinStaminaToHeal));
+    localStorage.setItem(uid+'g_fightAutoFightEnabled', JSON.stringify(g_fightAutoFightEnabled));
     localStorage.setItem(uid+'g_missionsAutoHealingEnabled', JSON.stringify(g_missionsAutoHealingEnabled));
     localStorage.setItem(uid+'g_investmentNextCost', JSON.stringify(g_investmentNextCost));
     localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
@@ -28,6 +30,8 @@ function g_save() {
 function init() {
 
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
+    g_fightMinStaminaToHeal = JSON.parse(localStorage.getItem(uid+'g_fightMinStaminaToHeal'));
+    g_fightAutoFightEnabled = JSON.parse(localStorage.getItem(uid+'g_fightAutoFightEnabled'));
     g_missionsAutoHealingEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoHealingEnabled'));
     g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));
     g_missionsNextEnergy = JSON.parse(localStorage.getItem(uid+'g_missionsNextEnergy'));
@@ -36,7 +40,6 @@ function init() {
     g_investmentNextCost = JSON.parse(localStorage.getItem(uid+'g_investmentNextCost'));
     g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem(uid+'g_investmentStartAutoInvestmentNow'));
     g_missionsCurrentCat = JSON.parse(localStorage.getItem(uid+'g_missionsCurrentCat'));
-
 
 	// Create the sidebar menu
 	create_sidebar();
@@ -47,6 +50,7 @@ function init() {
 
     investment_timer_start();
     missions_timer_start();
+	fight_timer_start();
 
     // Start auto-invest, if autoinvesting is enabled
     if (g_investmentAutoInvestEnabled === true) {
@@ -65,12 +69,18 @@ function init() {
         $('#checkbox_auto_healing_enabled').prop('checked', true);
     }
 
+    // Start auto-fighting, if auto fighting is enabled
+    if (g_fightAutoFightEnabled === true) {
+        $('#checkbox_auto_fighting_enabled').prop('checked', true);
+        fight_run_auto_fight();
+    }
 
 
+	/* Attack helper disabled because of work on auto-fighting feature
 	// Attack helper
 	if (options.fight_hide_strong && document.URL.indexOf("fight.php") > 0) {
 		fight_helper_init();
-	}
+	} */
 
 	// Home fix
 	if (document.URL.indexOf("home.php") > 0) {
