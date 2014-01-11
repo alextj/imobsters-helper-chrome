@@ -19,12 +19,15 @@ function investment_timer_stop() {
 function investment_run_auto_invest() {
 
     if (g_investmentAutoInvestEnabled === true) {
-        // Cash on hand
-        var spendingAmount = get_current_cash();
+		
+		if (get_current_level() >= 7) {
+        	// Cash on hand
+        	var spendingAmount = get_current_cash();
 
-        if (spendingAmount > g_investmentNextCost) {
-            investment_load_page_and_invest();
-        }
+        	if (spendingAmount > g_investmentNextCost) {
+        		investment_load_page_and_invest();
+        	}
+		}
 	}
 }
 

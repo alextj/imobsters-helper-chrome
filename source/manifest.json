@@ -55,6 +55,9 @@
 
             // Missions
             "classes/missions/class-missions-auto.js",
+			
+            // Skills
+            "classes/skill/class-skill-auto.js",
 
             // FOR SPARTA
             "classes/init.js"

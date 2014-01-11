@@ -30,10 +30,22 @@ body{background-color:black !important;}
 	bottom: 0;
 	right: 0;
 	width: 800px;
-	height: 200px;
+	height: 30px;
 	border: 1px solid #FFF;
 	overflow-y: scroll;
 	overflow-x: auto;
+}
+
+#log_window_btn {
+	background: #000;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #CCC;
+	cursor: pointer;
+	text-align: center;
 }
 
 .modal_loading {

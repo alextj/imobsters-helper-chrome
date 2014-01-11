@@ -1,3 +1,42 @@
+var skill_timer = 0;
+
+function skill_timer_start() {
+    skill_timer = setInterval(skill_timer_tick, 10000);
+}
+
+function skill_timer_tick() {
+    skill_run_auto_skill();
+}
+
+function skill_timer_stop() {
+    clearInterval(skill_timer);
+}
+
+function skill_run_auto_skill() {
+	if (g_autoSkillEnabled) {
+		var textDecor = $('.levelFrontTopArea > a').css("text-decoration");
+		if (textDecor.indexOf("none") == -1) {
+			skill_do_skillup();
+		}
+	}
+}
+
+function skill_do_skillup() {
+	
+    if (document.URL.indexOf("profile.php?selectedTab=skill") < 1) {
+        // Automatically move to fight page if not already there
+        window.location.href = 'profile.php?selectedTab=skill';
+        return false;
+	}
+	
+	// find Attack skill 
+	$('#skill_offense_button').find('div').click();
+	
+	if ($('#skill_point').text().trim() == 0) {
+		// go to home page to update the page header
+		window.location = 'home.php';
+	}
+}
 /*
 
 Add skill button:
@@ -18,6 +57,8 @@ if ($('#skill_point').html() > 0) {
 	window.location = 'home.php';
 }
 
+
+var textDecor = $('.levelFrontTopArea > a').css(text-decoration);
 --------------------------------
 when skill points available:
 

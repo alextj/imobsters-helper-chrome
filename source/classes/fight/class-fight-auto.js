@@ -61,28 +61,30 @@ function fight_timer_stop() {
 
 function fight_run_auto_fight() {
     if (g_fightAutoFightEnabled === true) {
-		var currentStamina = get_current_stamina();
-		if (is_in_hospital()) {
-			// Initialize minimum stamina if it was never set
-			if (g_fightMinStaminaToHeal == null) {
-				g_fightMinStaminaToHeal = 5;
-			}
-			if (currentStamina < g_fightMinStaminaToHeal) {
-				// Not enough stamina to heal, wait for more stamina
-				log_write('In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
-				return false;
+		if (get_current_level() >= 3) {
+			var currentStamina = get_current_stamina();
+			if (is_in_hospital()) {
+				// Initialize minimum stamina if it was never set
+				if (g_fightMinStaminaToHeal == null) {
+					g_fightMinStaminaToHeal = 3;
+				}
+				if (currentStamina < g_fightMinStaminaToHeal) {
+					// Not enough stamina to heal, wait for more stamina
+					log_write('In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+					return false;
+				} else {
+					// There is enough stamina - heal now and fight!
+					log_write('In hospital, healing!');
+					heal_auto();
+				}
 			} else {
-				// There is enough stamina - heal now and fight!
-				log_write('In hospital, healing!');
-				heal_auto();
-			}
-		} else {
-			if (currentStamina > 0) {
-				// Find someone to attack now!
-				fight_do();
-			} else {
-				// Wait till there is enough stamina
-				return false;
+				if (currentStamina > 0) {
+					// Find someone to attack now!
+					fight_do();
+				} else {
+					// Wait till there is enough stamina
+					return false;
+				}
 			}
 		}
     }
@@ -99,7 +101,7 @@ function fight_do() {
 	}
 	$('.fightMobSize').each(function(index) {
 		var thisMobSize = $(this).text().trim();
-		if (thisMobSize <= mob_size - 3) {
+		if (thisMobSize <= mob_size - 2) {
 			// Small enough to attack
 			var mob_id = fight_mob_id(index);
 			if (fight_mob_not_attacked_before(mob_id)) {
@@ -183,9 +185,13 @@ function fight_get_fight_result() {
 		g_lostFights = 0;
 	}
 	var hasWon = false;
-	if ($('#fightResult > div').first().attr("class") == "messageBoxSuccess") {
+	if ($('#fightResult > div').find('span.wonFight').length > 0) {
 		hasWon = true;
+	} else if ($('#fightResult > div').find('span.lostFight').length > 0) {
+		var hasWon = false;
 	} else {
+		log_write("Fight: Result: Error - couldn't find fight result here!");
+		return false;
 	}
 
 	g_totalFights++;
@@ -200,7 +206,7 @@ function fight_get_fight_result() {
 		log_write("Fight: LOST! (" + percentage + "% lost total)");
 	}
 
-	if (g_totalFights > 10 && percentage > 10) {
+	if (g_totalFights > 10 && percentage > 20) {
 		log_write("Fight: auto-fight stopped, losing percentage too high (" + percentage + "% lost total)");
 		g_fightAutoFightEnabled = false;
 		g_save();

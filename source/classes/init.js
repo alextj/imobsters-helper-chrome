@@ -15,6 +15,7 @@ $(document).ready(function() {
 function g_save() {
 
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
+    localStorage.setItem(uid+'g_autoSkillEnabled', JSON.stringify(g_autoSkillEnabled));
     localStorage.setItem(uid+'g_lostFights', JSON.stringify(g_lostFights));
     localStorage.setItem(uid+'g_totalFights', JSON.stringify(g_totalFights));
     localStorage.setItem(uid+'g_foughtMobsters', JSON.stringify(g_foughtMobsters));
@@ -33,6 +34,7 @@ function g_save() {
 function init() {
 
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
+    g_autoSkillEnabled = JSON.parse(localStorage.getItem(uid+'g_autoSkillEnabled'));
     g_lostFights = JSON.parse(localStorage.getItem(uid+'g_lostFights'));
     g_totalFights = JSON.parse(localStorage.getItem(uid+'g_totalFights'));
     g_foughtMobsters = JSON.parse(localStorage.getItem(uid+'g_foughtMobsters'));
@@ -62,6 +64,7 @@ function init() {
     investment_timer_start();
     missions_timer_start();
 	fight_timer_start();
+	skill_timer_start();
 
     // Start auto-invest, if autoinvesting is enabled
     if (g_investmentAutoInvestEnabled === true) {
@@ -84,6 +87,12 @@ function init() {
     if (g_fightAutoFightEnabled === true) {
         $('#checkbox_auto_fighting_enabled').prop('checked', true);
         fight_run_auto_fight();
+    }
+
+    // Start auto-skill, if auto skill is enabled
+    if (g_autoSkillEnabled === true) {
+        $('#checkbox_auto_skill_enabled').prop('checked', true);
+        skill_run_auto_skill();
     }
 
 

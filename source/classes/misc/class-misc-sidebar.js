@@ -23,14 +23,26 @@ function create_sidebar() {
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
         '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>' +
-        '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>'
+        '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>' +
+        '<input type="checkbox" id="checkbox_auto_skill_enabled"> Auto skill up<br>'
     ).appendTo('body');
 	$(document.createElement('div')).attr("id","log_window").html(g_log).appendTo('body');
+	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
 
     $('#checkbox_auto_invest_enabled').change(function(){
         g_investmentAutoInvestEnabled = this.checked ? true : false;
         g_save();
     });
+	
+	$('#log_window_btn').click(function() {
+		if ($('#log_window').css("height") == "200px") {
+			$('#log_window').css("height", 30);
+			$('#log_window_btn').html("^");
+		} else {
+			$('#log_window').css("height", 200);
+			$('#log_window_btn').html("v");
+		}
+	});
 
     $('#checkbox_auto_missions_enabled').change(function(){
         g_missionsAutoMissionEnabled = this.checked ? true : false;
@@ -44,6 +56,11 @@ function create_sidebar() {
 
     $('#checkbox_auto_fighting_enabled').change(function(){
         g_fightAutoFightEnabled = this.checked ? true : false;
+        g_save();
+    });
+
+    $('#checkbox_auto_skill_enabled').change(function(){
+        g_autoSkillEnabled = this.checked ? true : false;
         g_save();
     });
 }
