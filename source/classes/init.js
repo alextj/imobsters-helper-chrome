@@ -15,8 +15,8 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_guiLogWindowHeight', JSON.stringify(g_guiLogWindowHeight));
     localStorage.setItem(uid+'g_currentLevel', JSON.stringify(g_currentLevel));
-    localStorage.setItem(uid+'g_fightHistory', JSON.stringify(g_fightHistory));
     localStorage.setItem(uid+'g_schedulerCurrentTask', JSON.stringify(g_schedulerCurrentTask));
     localStorage.setItem(uid+'g_schedulerLastTaskStartTime', JSON.stringify(g_schedulerLastTaskStartTime));
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
@@ -24,20 +24,19 @@ function g_save() {
     localStorage.setItem(uid+'g_lostFights', JSON.stringify(g_lostFights));
     localStorage.setItem(uid+'g_totalFights', JSON.stringify(g_totalFights));
     localStorage.setItem(uid+'g_foughtMobsters', JSON.stringify(g_foughtMobsters));
+    localStorage.setItem(uid+'g_fightHistory', JSON.stringify(g_fightHistory));
     localStorage.setItem(uid+'g_fightMinStaminaToHeal', JSON.stringify(g_fightMinStaminaToHeal));
     localStorage.setItem(uid+'g_fightAutoFightEnabled', JSON.stringify(g_fightAutoFightEnabled));
-    localStorage.setItem(uid+'g_missionsAutoHealingEnabled', JSON.stringify(g_missionsAutoHealingEnabled));
     localStorage.setItem(uid+'g_investmentNextCost', JSON.stringify(g_investmentNextCost));
-    localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
-    localStorage.setItem(uid+'g_missionsStartDoingNow', JSON.stringify(g_missionsStartDoingNow));
-    localStorage.setItem(uid+'g_investmentStartAutoInvestmentNow', JSON.stringify(g_investmentStartAutoInvestmentNow));
     localStorage.setItem(uid+'g_investmentAutoInvestEnabled', JSON.stringify(g_investmentAutoInvestEnabled));
+    localStorage.setItem(uid+'g_missionsNextEnergy', JSON.stringify(g_missionsNextEnergy));
     localStorage.setItem(uid+'g_missionsAutoMissionEnabled', JSON.stringify(g_missionsAutoMissionEnabled));
     localStorage.setItem(uid+'g_missionsCurrentCat', JSON.stringify(g_missionsCurrentCat));
 }
 
 function init() {
 	g_page_loaded = true;
+    g_guiLogWindowHeight = JSON.parse(localStorage.getItem(uid+'g_guiLogWindowHeight'));
     g_currentLevel = JSON.parse(localStorage.getItem(uid+'g_currentLevel'));
     g_fightHistory = JSON.parse(localStorage.getItem(uid+'g_fightHistory'));
     g_schedulerCurrentTask = JSON.parse(localStorage.getItem(uid+'g_schedulerCurrentTask'));
@@ -49,13 +48,10 @@ function init() {
     g_foughtMobsters = JSON.parse(localStorage.getItem(uid+'g_foughtMobsters'));
     g_fightMinStaminaToHeal = JSON.parse(localStorage.getItem(uid+'g_fightMinStaminaToHeal'));
     g_fightAutoFightEnabled = JSON.parse(localStorage.getItem(uid+'g_fightAutoFightEnabled'));
-    g_missionsAutoHealingEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoHealingEnabled'));
     g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));
     g_missionsNextEnergy = JSON.parse(localStorage.getItem(uid+'g_missionsNextEnergy'));
-    g_missionsStartDoingNow = JSON.parse(localStorage.getItem(uid+'g_missionsStartDoingNow'));
     g_investmentAutoInvestEnabled = JSON.parse(localStorage.getItem(uid+'g_investmentAutoInvestEnabled'));
     g_investmentNextCost = JSON.parse(localStorage.getItem(uid+'g_investmentNextCost'));
-    g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem(uid+'g_investmentStartAutoInvestmentNow'));
     g_missionsCurrentCat = JSON.parse(localStorage.getItem(uid+'g_missionsCurrentCat'));
 
     if (g_currentLevel == null) {

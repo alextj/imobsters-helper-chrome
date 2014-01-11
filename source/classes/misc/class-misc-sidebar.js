@@ -32,10 +32,13 @@ function create_sidebar() {
 		if ($('#log_window').css("height") == "200px") {
 			$('#log_window').css("height", 30);
 			$('#log_window_btn').html("^");
+            g_guiLogWindowHeight = 30;
 		} else {
 			$('#log_window').css("height", 200);
 			$('#log_window_btn').html("v");
+            g_guiLogWindowHeight = 200;
 		}
+        g_save();
 	});
 
     $('#checkbox_auto_missions_enabled').change(function(){
@@ -69,6 +72,8 @@ function sidebar_init_ui() {
     if (g_autoSkillEnabled === true) {
         $('#checkbox_auto_skill_enabled').prop('checked', true);
     }
+
+    $('#log_window').css("height", g_guiLogWindowHeight);
 }
 
 function sidebar_update_status() {
