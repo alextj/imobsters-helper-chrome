@@ -61,7 +61,7 @@ function fight_run_auto_fight() {
 				if (g_fightMinStaminaToHeal == null) {
 					g_fightMinStaminaToHeal = 3;
 				}
-				if (maxStamina > 6) {
+				if (maxStamina < 6) {
 					g_fightMinStaminaToHeal = 3;
 				} else {
 					g_fightMinStaminaToHeal = 5;

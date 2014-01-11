@@ -15,6 +15,8 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_currentLevel', JSON.stringify(g_currentLevel));
+    localStorage.setItem(uid+'g_fightHistory', JSON.stringify(g_fightHistory));
     localStorage.setItem(uid+'g_schedulerCurrentTask', JSON.stringify(g_schedulerCurrentTask));
     localStorage.setItem(uid+'g_schedulerLastTaskStartTime', JSON.stringify(g_schedulerLastTaskStartTime));
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
@@ -36,6 +38,8 @@ function g_save() {
 
 function init() {
 	g_page_loaded = true;
+    g_currentLevel = JSON.parse(localStorage.getItem(uid+'g_currentLevel'));
+    g_fightHistory = JSON.parse(localStorage.getItem(uid+'g_fightHistory'));
     g_schedulerCurrentTask = JSON.parse(localStorage.getItem(uid+'g_schedulerCurrentTask'));
     g_schedulerLastTaskStartTime = new Date(JSON.parse(localStorage.getItem(uid+'g_schedulerLastTaskStartTime')));
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
@@ -53,6 +57,26 @@ function init() {
     g_investmentNextCost = JSON.parse(localStorage.getItem(uid+'g_investmentNextCost'));
     g_investmentStartAutoInvestmentNow = JSON.parse(localStorage.getItem(uid+'g_investmentStartAutoInvestmentNow'));
     g_missionsCurrentCat = JSON.parse(localStorage.getItem(uid+'g_missionsCurrentCat'));
+
+    if (g_currentLevel == null) {
+    	g_currentLevel = get_current_level();
+    } else {
+    	var currentLevel = get_current_level();
+    	if (g_currentLevel != currentLevel) {
+    		// Leveled up!
+    		// Save fight history
+    		if (g_fightHistory == null) {
+    			g_fightHistory = [];
+    		}
+    		g_fightHistory.push([g_currentLevel, g_totalFights, g_lostFights]);
+    		// Update level
+    		g_currentLevel = currentLevel;
+    		// Reset fight statistics
+    		g_lostFights = 0;
+    		g_totalFights = 0;
+    		g_save();
+    	}
+    }
 
 	// Create the sidebar menu
 	create_sidebar();
