@@ -1,5 +1,6 @@
 var options;
 var uid;
+var g_page_loaded = false;
 $(document).ready(function() {
 
 	chrome.extension.sendRequest({action: 'gpmeGetOptions'}, function(theOptions) {
@@ -14,6 +15,8 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_schedulerCurrentTask', JSON.stringify(g_schedulerCurrentTask));
+    localStorage.setItem(uid+'g_schedulerLastTaskStartTime', JSON.stringify(g_schedulerLastTaskStartTime));
     localStorage.setItem(uid+'g_log', JSON.stringify(g_log));
     localStorage.setItem(uid+'g_autoSkillEnabled', JSON.stringify(g_autoSkillEnabled));
     localStorage.setItem(uid+'g_lostFights', JSON.stringify(g_lostFights));
@@ -32,7 +35,9 @@ function g_save() {
 }
 
 function init() {
-
+	g_page_loaded = true;
+    g_schedulerCurrentTask = JSON.parse(localStorage.getItem(uid+'g_schedulerCurrentTask'));
+    g_schedulerLastTaskStartTime = new Date(JSON.parse(localStorage.getItem(uid+'g_schedulerLastTaskStartTime')));
     g_log = JSON.parse(localStorage.getItem(uid+'g_log'));
     g_autoSkillEnabled = JSON.parse(localStorage.getItem(uid+'g_autoSkillEnabled'));
     g_lostFights = JSON.parse(localStorage.getItem(uid+'g_lostFights'));
@@ -54,53 +59,13 @@ function init() {
 
 	// Remove advertisements
 	remove_adverts();
+
+	sidebar_init_ui();
 	
 	// If fighting, get fight result
 	if (document.URL.indexOf("fight.php?action=fight") > 0) {
 		fight_get_fight_result();
 	}
-
-
-    investment_timer_start();
-    missions_timer_start();
-	fight_timer_start();
-	skill_timer_start();
-
-    // Start auto-invest, if autoinvesting is enabled
-    if (g_investmentAutoInvestEnabled === true) {
-        $('#checkbox_auto_invest_enabled').prop('checked', true);
-        investment_run_auto_invest();
-    }
-
-    // Start auto-missions, if auto missions are enabled
-    if (g_missionsAutoMissionEnabled === true) {
-        $('#checkbox_auto_missions_enabled').prop('checked', true);
-        missions_run_auto_missions();
-    }
-
-    // Check auto heraling checkbox, if auto healing is enabled
-    if (g_missionsAutoHealingEnabled === true) {
-        $('#checkbox_auto_healing_enabled').prop('checked', true);
-    }
-
-    // Start auto-fighting, if auto fighting is enabled
-    if (g_fightAutoFightEnabled === true) {
-        $('#checkbox_auto_fighting_enabled').prop('checked', true);
-        fight_run_auto_fight();
-    }
-
-    // Start auto-skill, if auto skill is enabled
-    if (g_autoSkillEnabled === true) {
-        $('#checkbox_auto_skill_enabled').prop('checked', true);
-        skill_run_auto_skill();
-    }
-
-
-	/* Attack helper disabled because of work on auto-fighting feature
-	// Attack helper
-	if (options.fight_hide_strong && document.URL.indexOf("fight.php") > 0) {
-		fight_helper_init();
-	} */
 
 	// Home fix
 	if (document.URL.indexOf("home.php") > 0) {
@@ -115,11 +80,6 @@ function init() {
 	// Investment fix
 	if (document.URL.indexOf("investment.php") > 0) {
 		investment_fixes_init();
-		if (g_investmentStartAutoInvestmentNow) {
-            g_investmentStartAutoInvestmentNow = false;
-            g_save();
-            investment_auto();
-		}
 	}
 
 	// Loot fix
@@ -132,41 +92,8 @@ function init() {
 		bank_fixes_init();
 	}
 
-	// Deposit all your monies
-	$('#bank_auto').click(function(e) {
-		e.preventDefault();
-		bank_auto();
-	});
-
-	// Auto invest in real estate
-	$('#investment_auto').click(function(e) {
-		e.preventDefault();
-		investment_auto();
-	});
-
-	// Auto heal
-	$('#heal_auto').click(function(e) {
-		e.preventDefault();
-		heal_auto();
-	});
-
-	// Do auto heal
-	if (g_missionsAutoHealingEnabled) {
-
-		var health = $('#healthCurrent').text().trim();
-		var maxHealth = $('#healthMax').text().trim();
-		var ratio = (health / maxHealth) * 100;
-
-		if ( ratio <= options.health_threshold) {
-			heal_auto();
-		}
-
+	var taskChanged = scheduler_run();
+	if (taskChanged == false) {
+		scheduler_run_task(g_schedulerCurrentTask);
 	}
-
-	// Auto invite mob codes
-	$('#invite_auto').click(function(e) {
-		e.preventDefault();
-		invite_auto();
-	});
-
 }

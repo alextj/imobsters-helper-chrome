@@ -65,6 +65,28 @@ function create_sidebar() {
     });
 }
 
+function sidebar_init_ui() {
+    if (g_investmentAutoInvestEnabled === true) {
+        $('#checkbox_auto_invest_enabled').prop('checked', true);
+    }
+
+    if (g_missionsAutoMissionEnabled === true) {
+        $('#checkbox_auto_missions_enabled').prop('checked', true);
+    }
+
+    if (g_missionsAutoHealingEnabled === true) {
+        $('#checkbox_auto_healing_enabled').prop('checked', true);
+    }
+
+    if (g_fightAutoFightEnabled === true) {
+        $('#checkbox_auto_fighting_enabled').prop('checked', true);
+    }
+
+    if (g_autoSkillEnabled === true) {
+        $('#checkbox_auto_skill_enabled').prop('checked', true);
+    }
+}
+
 function sidebar_update_status() {
     $('#sidebar_investment_cost').text('Next investment cost: $' + g_investmentNextCost);
     $('#sidebar_mission_req_energy').text('Next mission requires: ' + g_missionsNextEnergy + ' e');

@@ -1,33 +1,15 @@
 
-
-// TODO:
-// - auto purchase items if required by mission
-// - safe fail if no money to purchase required items (simply purcahse when there happens to be enough cash)
-// - safe fail if not enough mob members (paint auto-missions check box text red to inform user and write in log)
-// - safe fail if the only missions that are not done are still locked (simply wait if there are no more missions to do, paint check box text green)
-
-
-var missions_timer = 0;
-
-function missions_timer_start() {
-    missions_timer = setInterval(missions_timer_tick, 10000);
-}
-
-function missions_timer_tick() {
-    missions_run_auto_missions();
-}
-
-function missions_timer_stop() {
-    clearInterval(missions_timer);
-}
-
-
-function missions_run_auto_missions() {
-    if (g_missionsAutoMissionEnabled === true) {
+function missions_task_run() {
+    log_write("Task Missions");
+    if (g_missionsAutoMissionEnabled) {
         var currentEnergy = get_current_energy();
         if (currentEnergy >= g_missionsNextEnergy) {
             missions_do();
+        } else {
+            scheduler_next_task();
         }
+    } else {
+        scheduler_next_task();
     }
 }
 
@@ -38,7 +20,7 @@ function missions_do() {
     }
     if (document.URL.indexOf("missions.php?cat=" + g_missionsCurrentCat) < 1) {
         // Automatically move to missions page if not already there
-        missions_load_page_and_do();
+        window.location.href = 'missions.php?cat=' + g_missionsCurrentCat;
         return false;
 	}
 
@@ -48,7 +30,7 @@ function missions_do() {
         // All the missions were done 4 times in this city, move on to the next city!
         g_missionsCurrentCat++;
         g_save();
-        missions_load_page_and_do();
+        missions_do();
         return false;
     }
 
@@ -56,6 +38,7 @@ function missions_do() {
 
     if (nextMission == -1) {
         log_write("Missions: no available missions to do *******");
+        scheduler_next_task();
         return false;
     }
 
@@ -70,19 +53,13 @@ function missions_do() {
     var currentEnergy = get_current_energy();
     if (currentEnergy < reqEnergy) {
 		// There is not enough energy to do the mission - quit
+        scheduler_next_task();
         return false;
     }
 	
 	// There is enough energy - do the mission
 	log_write("Missions: Doing mission")
     mission_do_mission(nextMission);
-}
-
-function missions_load_page_and_do() {
-
-    window.location.href = 'missions.php?cat=' + g_missionsCurrentCat;
-    g_missionsStartDoingNow = true;
-    g_save();
 }
 
 function missions_current_rank() {

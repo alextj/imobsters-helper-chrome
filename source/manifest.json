@@ -14,11 +14,26 @@
         ]
     },
     "content_scripts": [{
+        "run_at": "document_start",
+        "js": [
+            // Watchdog
+            "classes/misc/class-misc-watchdog.js"
+        ],
 
+        "css": [
+            "assets/css/storm8_styles.css",
+            "assets/css/bootstrap.css"
+        ],
+
+        "matches": ["http://im.storm8.com/*"]
+    },{
         "js": [
 
             // jQuery
             "assets/js/jquery.js",
+
+            // Scheduler
+            "classes/scheduler/class-scheduler.js",
 
             // Miscellaneous
             "classes/misc/class-misc-general.js",

@@ -43,24 +43,16 @@ Smart use of health - result monitoring:
 
 */
 
-var fight_timer = 0;
 // TODO: get mob size dynamically
 var mob_size = 4;
 
-function fight_timer_start() {
-    fight_timer = setInterval(fight_timer_tick, 10000);
-}
-
-function fight_timer_tick() {
-    fight_run_auto_fight();
-}
-
-function fight_timer_stop() {
-    clearInterval(fight_timer);
+function fight_task_run() {
+	log_write("Task Fight");
+	fight_run_auto_fight();
 }
 
 function fight_run_auto_fight() {
-    if (g_fightAutoFightEnabled === true) {
+    if (g_fightAutoFightEnabled) {
 		if (get_current_level() >= 3) {
 			var currentStamina = get_current_stamina();
 			if (is_in_hospital()) {
@@ -71,6 +63,7 @@ function fight_run_auto_fight() {
 				if (currentStamina < g_fightMinStaminaToHeal) {
 					// Not enough stamina to heal, wait for more stamina
 					log_write('In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+					scheduler_next_task();
 					return false;
 				} else {
 					// There is enough stamina - heal now and fight!
@@ -83,10 +76,15 @@ function fight_run_auto_fight() {
 					fight_do();
 				} else {
 					// Wait till there is enough stamina
+					scheduler_next_task();
 					return false;
 				}
 			}
+		} else {
+			scheduler_next_task();
 		}
+    } else {
+    	scheduler_next_task();
     }
 }
 
@@ -206,9 +204,10 @@ function fight_get_fight_result() {
 		log_write("Fight: LOST! (" + percentage + "% lost total)");
 	}
 
-	if (g_totalFights > 10 && percentage > 20) {
+	if (g_totalFights > 20 && percentage > 20) {
 		log_write("Fight: auto-fight stopped, losing percentage too high (" + percentage + "% lost total)");
 		g_fightAutoFightEnabled = false;
 		g_save();
+		sidebar_init_ui();
 	}
 }

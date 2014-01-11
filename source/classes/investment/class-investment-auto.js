@@ -1,45 +1,27 @@
-/**
- * Init for purchasing real estate.
- */
 
-var investment_timer = 0;
-
-function investment_timer_start() {
-    investment_timer = setInterval(investment_timer_tick, 10000);
-}
-
-function investment_timer_tick() {
-    investment_run_auto_invest();
-}
-
-function investment_timer_stop() {
-    clearInterval(investment_timer);
-}
-
-function investment_run_auto_invest() {
-
-    if (g_investmentAutoInvestEnabled === true) {
-		
+function investment_task_run() {
+	log_write("Task Investment");
+	if (g_investmentAutoInvestEnabled == true) {
 		if (get_current_level() >= 7) {
-        	// Cash on hand
-        	var spendingAmount = get_current_cash();
-
-        	if (spendingAmount > g_investmentNextCost) {
-        		investment_load_page_and_invest();
+        	if (get_current_cash() > g_investmentNextCost) {
+        		investment_do();
+        	} else {
+        		scheduler_next_task();
         	}
+		} else {
+        	scheduler_next_task();
 		}
+	} else {
+		scheduler_next_task();
 	}
 }
 
-// Open Investment page and start auto-investing
-function investment_load_page_and_invest() {
+function investment_do() {
 
-    window.location.href = 'investment.php';
-    g_investmentStartAutoInvestmentNow = true;
-    g_save();
-}
-
-function investment_auto() {
+	if (document.URL.indexOf("investment.php") < 1) {
+      	window.location.href = 'investment.php';
+      	return false;
+	}
 
     var estateNames = [
         "Street Vendor",
@@ -59,10 +41,6 @@ function investment_auto() {
         "Auction House",
         "Record Label",
     ];
-
-	if (!invest_verify()) {
-		return false;
-	}
 
 	data = invest_calculations();
 
@@ -88,37 +66,7 @@ function investment_auto() {
         var nextCost = cost[data['nextItemIndex']];
         log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
 	}
-}
-
-/**
- * Confirm whether the current user can invest
- * or not by checking their level, and the current
- * page they're on.
- * @return {boolean} User is verified.
- */
-
-function invest_verify() {
-
-	var level = get_current_level();
-
-	if (!level) {
-		alert("Action failed. Level could not be found.")
-		return false;
-	}
-
-	if (level < 7) {
-		alert("Action failed. You must be level 7+ to purchase buildings.")
-		return false;
-	}
-
-	if (document.URL.indexOf("investment.php") < 1) {
-        // Automatically move to investment page if not already there
-        investment_load_page_and_invest();
-	}
-
-	// Assuming all is well
-	return true;
-
+	scheduler_next_task();
 }
 
 /**
