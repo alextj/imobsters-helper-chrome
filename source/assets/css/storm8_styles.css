@@ -25,6 +25,7 @@ body{background-color:black !important;}
 }
 
 #log_window {
+	z-index: 99999;
 	background: #000;
 	position:fixed;
 	bottom: 0;
@@ -37,9 +38,49 @@ body{background-color:black !important;}
 }
 
 #log_window_btn {
+	z-index: 999999;
 	background: #000;
 	position: fixed;
 	bottom: 0;
+	right: 0;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #CCC;
+	cursor: pointer;
+	text-align: center;
+}
+
+#fight_stats_window {
+	z-index: 99999;
+	background: #000;
+	position:fixed;
+	top: 50px;
+	right: 0;
+	width: 50px;
+	height: 400px;
+	border: 1px solid #FFF;
+	overflow-y: scroll;
+	overflow-x: auto;
+	font-size: 9px;
+	line-height: 10px;
+}
+#fight_stats_window table {
+	float: left;
+	border: 1px solid #FFF;
+	margin-left: 10px;
+}
+
+#fight_stats_window td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+#fight_stats_size_btn {
+	z-index: 999999;
+	background: #000;
+	position: fixed;
+	top: 50px;
 	right: 0;
 	width: 20px;
 	height: 20px;

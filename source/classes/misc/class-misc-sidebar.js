@@ -22,6 +22,47 @@ function create_sidebar() {
     ).appendTo('body');
 	$(document.createElement('div')).attr("id","log_window").html(g_log).appendTo('body');
 	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
+    $(document.createElement('div')).attr("id","fight_stats_window").html(
+        'fight stats:<br><br>' +
+        '<table>'+
+        '   <tr><td style="height: 0px; width: 20px; border: 0px solid #FFF;"> </td></tr>'+
+        '   <tr><td style="height: 30px; width: 20px; border: 0px solid #FFF;">123<br>435</td></tr>'+
+        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #0F0;"> </td></tr>'+
+        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #F00;"> </td></tr>'+
+        '   <tr><td style="height: 20px; width: 20px; border: 1px solid #FFF;">11</td></tr>'+
+        '</table>'+
+        '<table>'+
+        '   <tr><td style="height: 0px; width: 20px; border: 0px solid #FFF;"> </td></tr>'+
+        '   <tr><td style="height: 30px; width: 20px; border: 0px solid #FFF;">34<br>345</td></tr>'+
+        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #0F0;"> </td></tr>'+
+        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #F00;"> </td></tr>'+
+        '   <tr><td style="height: 20px; width: 20px; border: 1px solid #FFF;">12</td></tr>'+
+        '</table>'+
+        ''
+    ).appendTo('body');
+    $(document.createElement('div')).attr("id","fight_stats_size_btn").html('>').appendTo("body");
+
+
+    // Draw fight stats
+    // Fight the largest total fights
+    var largestTotal = 0;
+    for (var i = 0; i < g_fightHistory.length; i++) {
+        var currentTotal = g_fightHistory[i][1];
+        if (currentTotal > largestTotal) {
+            largestTotal = currentTotal;
+        }
+    }
+    // Define scalar
+    var scalar = 200 / largestTotal;
+    // Draw each bar
+    for (var i = 0; i < g_fightHistory.length; i++) {
+        var level = g_fightHistory[i][0];
+        var total = g_fightHistory[i][1];
+        var lost = g_fightHistory[i][2];
+        var totalHeight = 
+        $(document.createElement('table')).attr("id", "fight_stats_table_" + i).appendTo("fight_stats_window");
+        $(document.createElement('tr')).appendTo("fight_stats_table_" + i);
+    }
 
     $('#checkbox_auto_invest_enabled').change(function(){
         g_investmentAutoInvestEnabled = this.checked ? true : false;
@@ -40,6 +81,19 @@ function create_sidebar() {
 		}
         g_save();
 	});
+    
+    $('#fight_stats_size_btn').click(function() {
+        if ($('#fight_stats_window').css("width") == "400px") {
+            $('#fight_stats_window').css("width", 50);
+            $('#fight_stats_size_btn').html("<");
+            g_guiFightStatsWindowHeight = 50;
+        } else {
+            $('#fight_stats_window').css("width", 400);
+            $('#fight_stats_size_btn').html(">");
+            g_guiFightStatsWindowHeight = 400;
+        }
+        g_save();
+    });
 
     $('#checkbox_auto_missions_enabled').change(function(){
         g_missionsAutoMissionEnabled = this.checked ? true : false;
@@ -74,6 +128,7 @@ function sidebar_init_ui() {
     }
 
     $('#log_window').css("height", g_guiLogWindowHeight);
+    $('#fight_stats_window').css("width", g_guiFightStatsWindowHeight);
 }
 
 function sidebar_update_status() {
