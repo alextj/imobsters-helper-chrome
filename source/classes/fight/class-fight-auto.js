@@ -55,10 +55,16 @@ function fight_run_auto_fight() {
     if (g_fightAutoFightEnabled) {
 		if (get_current_level() >= 3) {
 			var currentStamina = get_current_stamina();
+			var maxStamina = get_max_stamina();
 			if (is_in_hospital()) {
 				// Initialize minimum stamina if it was never set
 				if (g_fightMinStaminaToHeal == null) {
 					g_fightMinStaminaToHeal = 3;
+				}
+				if (maxStamina > 6) {
+					g_fightMinStaminaToHeal = 3;
+				} else {
+					g_fightMinStaminaToHeal = 5;
 				}
 				if (currentStamina < g_fightMinStaminaToHeal) {
 					// Not enough stamina to heal, wait for more stamina

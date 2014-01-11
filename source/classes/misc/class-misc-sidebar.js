@@ -6,11 +6,6 @@ function create_sidebar() {
 	var menu = get_menu_items();
 	var nav = '';
 
-	nav += create_button('', 'Auto deposit', 'bank_auto', 'btn-info');
-	nav += create_button('', 'Auto invest', 'investment_auto', 'btn-info');
-	nav += create_button('', 'Auto invite', 'invite_auto', 'btn-info');
-	nav += create_button('', 'Heal', 'heal_auto', 'btn-success');
-
 	for (var index in menu) {
 		nav += create_button(menu[index], index, '', 'btn-inverse');
 	}
@@ -22,7 +17,6 @@ function create_sidebar() {
         '<p id="sidebar_fighting_status"></p>' +
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
-        '<input type="checkbox" id="checkbox_auto_healing_enabled"> Auto healing<br>' +
         '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>' +
         '<input type="checkbox" id="checkbox_auto_skill_enabled"> Auto skill up<br>'
     ).appendTo('body');
@@ -48,12 +42,6 @@ function create_sidebar() {
         g_missionsAutoMissionEnabled = this.checked ? true : false;
         g_save();
     });
-
-    $('#checkbox_auto_healing_enabled').change(function(){
-        g_missionsAutoHealingEnabled = this.checked ? true : false;
-        g_save();
-    });
-
     $('#checkbox_auto_fighting_enabled').change(function(){
         g_fightAutoFightEnabled = this.checked ? true : false;
         g_save();
@@ -72,10 +60,6 @@ function sidebar_init_ui() {
 
     if (g_missionsAutoMissionEnabled === true) {
         $('#checkbox_auto_missions_enabled').prop('checked', true);
-    }
-
-    if (g_missionsAutoHealingEnabled === true) {
-        $('#checkbox_auto_healing_enabled').prop('checked', true);
     }
 
     if (g_fightAutoFightEnabled === true) {

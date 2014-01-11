@@ -29,13 +29,18 @@ function get_current_stamina() {
     return format_number($('#staminaCurrent').text());
 }
 
+function get_max_stamina() {
+	return format_number($('#staminaMax').text());
+}
+
 /**
  * Level of the user.
  * @return {string} Level represented as a string.
  */
 
 function get_current_level() {
-	return $('.levelFrontTopArea').text();
+	var level = parseInt($('.levelFrontTopArea > a').text(), 10);
+	return level;
 }
 
 function get_current_health() {

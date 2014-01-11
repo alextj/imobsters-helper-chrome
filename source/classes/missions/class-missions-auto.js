@@ -18,7 +18,32 @@ function missions_do() {
     if (g_missionsCurrentCat == null) {
         g_missionsCurrentCat = 1;
     }
-    if (document.URL.indexOf("missions.php?cat=" + g_missionsCurrentCat) < 1) {
+
+    // See if there is a box saying that mission failed because of 
+    // missing eqipment
+    if (document.URL.indexOf("missions.php") > 0) {
+        if ($('.messageBoxFail > span > span.cash > span').length > 0) {
+            var cashRequired = format_number($('.messageBoxFail > span > span.cash > span').text().trim());
+            var currentCash = get_current_cash();
+            if (currentCash >= cashRequired) {
+                // Buy
+                log_write("Missions: purchasing required equipment for " + cashRequired);
+
+                $('.messageBoxFail > div > center > input.btnDoAgain').css("border", "2px dotted blue");
+                $('.messageBoxFail > div > center > input.btnDoAgain').click();
+                scheduler_next_task();
+                return false;
+            } else {
+                // Not enough cash
+                log_write("Missions: not enough cash to purchase required equipment");
+                scheduler_next_task();
+                return false;
+            }
+        }
+    }
+
+    if (document.URL.indexOf("missions.php?") < 0 ||
+        document.URL.indexOf("cat=" + g_missionsCurrentCat) < 0) {
         // Automatically move to missions page if not already there
         window.location.href = 'missions.php?cat=' + g_missionsCurrentCat;
         return false;
@@ -26,7 +51,7 @@ function missions_do() {
 
     var currentRank = missions_current_rank();
 
-    if (currentRank >= 4) {
+    if (currentRank > 4) {
         // All the missions were done 4 times in this city, move on to the next city!
         g_missionsCurrentCat++;
         g_save();

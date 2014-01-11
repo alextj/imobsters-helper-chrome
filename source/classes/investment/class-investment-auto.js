@@ -66,7 +66,7 @@ function investment_do() {
         var nextCost = cost[data['nextItemIndex']];
         log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
 	}
-	scheduler_next_task();
+	window.location.href = 'home.php';
 }
 
 /**

@@ -13,7 +13,7 @@ function log_write(str) {
              num_two_digits(currentdate.getSeconds()) + "] " +
              str);
 
-    if (g_log.length > 20) {
+    if (g_log.length > 50) {
         g_log.pop();
     }
 
