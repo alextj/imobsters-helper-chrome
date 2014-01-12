@@ -39,7 +39,7 @@ function get_max_stamina() {
  */
 
 function get_current_level() {
-	var level = parseInt($('.levelFrontTopArea > a').text(), 10);
+	var level = parseInt($('.levelFrontTopArea').text(), 10);
 	return level;
 }
 

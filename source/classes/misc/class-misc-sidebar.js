@@ -29,6 +29,19 @@ function create_sidebar() {
 
 	if (g_fightHistory == null) {
 		g_fightHistory = [];
+		g_save();
+	}
+	if (g_currentLevel == null) {
+		g_currentLevel = get_current_level();
+		g_save();
+	}
+	if (g_totalFights == null) {
+		g_totalFights = 0;
+		g_save();
+	}
+	if (g_lostFights == null) {
+		g_lostFights = 0;
+		g_save();
 	}
 	
 	// [[9,45,3],[10,65,7],[11,78,34],[12,145,2],[13,170,160]]
@@ -116,13 +129,20 @@ function create_sidebar() {
 }
 
 function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
-    totalHeight = total * scalar;
-	topHeight = 200 - totalHeight;
-	lostHeight = lost * scalar;
-	if (totalHeight != 0) {
-		percentage = lostHeight * 100 / totalHeight;
-	} else {
+    var totalHeight = total * scalar;
+	var topHeight = 200 - totalHeight;
+	var lostHeight = lost * scalar;
+	if (total == 0) {
 		percentage = 0;
+		topHeight = 200;
+		totalHeight = 0;
+		lostHeight = 0;
+	} else {
+		if (totalHeight != 0) {
+			percentage = lostHeight * 100 / totalHeight;
+		} else {
+			percentage = 0;
+		}
 	}
 	totalHeight = totalHeight - lostHeight;
     $(document.createElement('table')).attr("id", "fight_stats_table" + i).appendTo("#fight_stats_window");

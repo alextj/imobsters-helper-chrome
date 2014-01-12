@@ -59,17 +59,10 @@ function fight_run_auto_fight() {
 			var currentStamina = get_current_stamina();
 			var maxStamina = get_max_stamina();
 			if (is_in_hospital()) {
-				// Initialize minimum stamina if it was never set
-				if (g_fightMinStaminaToHeal == null) {
-					g_fightMinStaminaToHeal = 3;
-				}
-
-				if (maxStamina > 10) {
-					g_fightMinStaminaToHeal = 10;
-				} else if (maxStamina > 5) {
-					g_fightMinStaminaToHeal = 5;
+				if (maxStamina > 11) {
+					g_fightMinStaminaToHeal = 11;
 				} else {
-					g_fightMinStaminaToHeal = 3;
+					g_fightMinStaminaToHeal = maxStamina;
 				}
 				if (currentStamina < g_fightMinStaminaToHeal) {
 					// Not enough stamina to heal, wait for more stamina
@@ -218,7 +211,7 @@ function fight_get_fight_result() {
 		hasWon = true;
 	} else if ($('#fightResult > div').find('span.lostFight').length > 0) {
 		var hasWon = false;
-	} else if ($('#fightResult > div.messageBoxFail').contains('They are in the emergency room and cannot be attacked')) {
+	} else if ($("#fightResult > div.messageBoxFail:contains('They are in the emergency room and cannot be attacked')").length > 0) {
 		log_write("Fight: he's in hospital.");
 	} else {
 		log_write("Fight: *** Error - couldn't find fight result here! ***");

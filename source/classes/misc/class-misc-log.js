@@ -2,6 +2,7 @@
 function log_write(str) {
     if (g_log == null) {
         g_log = [];
+		g_save();
     }
     var currentdate = new Date();
     g_log.unshift("[" +
@@ -23,6 +24,9 @@ function log_write(str) {
 }
 
 function init_log_window() {
+	if (g_log == null) {
+		g_log = [];
+	}
 	var html = g_log.join('<br>');
 	$(document.createElement('div')).attr("id","log_window").html(html).appendTo('body');
 	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
