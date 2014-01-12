@@ -47,13 +47,15 @@ Smart use of health - result monitoring:
 var mob_size = 4;
 
 function fight_task_run() {
-	log_write("Task Fight");
 	fight_run_auto_fight();
 }
 
 function fight_run_auto_fight() {
     if (g_fightAutoFightEnabled) {
 		if (get_current_level() >= 3) {
+			if (g_fightInHospitalWaitingForMoreStamina == null) {
+				g_fightInHospitalWaitingForMoreStamina = false;
+			}
 			var currentStamina = get_current_stamina();
 			var maxStamina = get_max_stamina();
 			if (is_in_hospital()) {
@@ -61,22 +63,30 @@ function fight_run_auto_fight() {
 				if (g_fightMinStaminaToHeal == null) {
 					g_fightMinStaminaToHeal = 3;
 				}
-				if (maxStamina < 6) {
-					g_fightMinStaminaToHeal = 3;
-				} else {
+
+				if (maxStamina > 10) {
+					g_fightMinStaminaToHeal = 10;
+				} else if (maxStamina > 5) {
 					g_fightMinStaminaToHeal = 5;
+				} else {
+					g_fightMinStaminaToHeal = 3;
 				}
 				if (currentStamina < g_fightMinStaminaToHeal) {
 					// Not enough stamina to heal, wait for more stamina
-					log_write('In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+					if (g_fightInHospitalWaitingForMoreStamina == false) {
+						log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+						g_fightInHospitalWaitingForMoreStamina = true;
+					}
 					scheduler_next_task();
 					return false;
 				} else {
 					// There is enough stamina - heal now and fight!
-					log_write('In hospital, healing!');
+					g_fightInHospitalWaitingForMoreStamina = false;
+					log_write('Fight: In hospital, healing!');
 					heal_auto();
 				}
 			} else {
+				g_fightInHospitalWaitingForMoreStamina = false;
 				if (currentStamina > 0) {
 					// Find someone to attack now!
 					fight_do();
@@ -103,6 +113,7 @@ function fight_do() {
         window.location.href = 'fight.php';
         return false;
 	}
+	var someoneWasAttacked = false;
 	$('.fightMobSize').each(function(index) {
 		var thisMobSize = $(this).text().trim();
 		if (thisMobSize <= mob_size - 2) {
@@ -114,6 +125,7 @@ function fight_do() {
 				log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
 				fight_add_mob_to_attacked_list(mob_id);
 				fight_attack_mob(index);
+				someoneWasAttacked = true;
 				// return false to break from each loop
 				return false;
 			} else {
@@ -123,6 +135,11 @@ function fight_do() {
 			// This mob is too big, skip it
 		}
 	});
+	if (someoneWasAttacked == false) {
+		// There was no suitable mob to attack.
+		// Refresh the list and try again
+		window.location.href = 'fight.php';
+	}
 }
 function fight_mob_id(index) {
 	var mob_id = 0;

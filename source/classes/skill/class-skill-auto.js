@@ -1,6 +1,5 @@
 
 function skill_task_run() {
-    log_write("Task Skill");
     if (g_autoSkillEnabled) {
         var textDecor = $('.levelFrontTopArea > a').css("text-decoration");
         if (textDecor.indexOf("none") == -1) {

@@ -23,6 +23,7 @@ function g_save() {
     localStorage.setItem(uid+'g_lostFights', JSON.stringify(g_lostFights));
     localStorage.setItem(uid+'g_totalFights', JSON.stringify(g_totalFights));
     localStorage.setItem(uid+'g_foughtMobsters', JSON.stringify(g_foughtMobsters));
+    localStorage.setItem(uid+'g_fightInHospitalWaitingForMoreStamina', JSON.stringify(g_fightInHospitalWaitingForMoreStamina));
     localStorage.setItem(uid+'g_fightHistory', JSON.stringify(g_fightHistory));
     localStorage.setItem(uid+'g_fightMinStaminaToHeal', JSON.stringify(g_fightMinStaminaToHeal));
     localStorage.setItem(uid+'g_fightAutoFightEnabled', JSON.stringify(g_fightAutoFightEnabled));
@@ -46,6 +47,7 @@ function init() {
     g_lostFights = JSON.parse(localStorage.getItem(uid+'g_lostFights'));
     g_totalFights = JSON.parse(localStorage.getItem(uid+'g_totalFights'));
     g_foughtMobsters = JSON.parse(localStorage.getItem(uid+'g_foughtMobsters'));
+    g_fightInHospitalWaitingForMoreStamina = JSON.parse(localStorage.getItem(uid+'g_fightInHospitalWaitingForMoreStamina'));
     g_fightMinStaminaToHeal = JSON.parse(localStorage.getItem(uid+'g_fightMinStaminaToHeal'));
     g_fightAutoFightEnabled = JSON.parse(localStorage.getItem(uid+'g_fightAutoFightEnabled'));
     g_missionsAutoMissionEnabled = JSON.parse(localStorage.getItem(uid+'g_missionsAutoMissionEnabled'));

@@ -1,6 +1,5 @@
 
 function investment_task_run() {
-	log_write("Task Investment");
 	if (g_investmentAutoInvestEnabled == true) {
 		if (get_current_level() >= 7) {
         	if (get_current_cash() > g_investmentNextCost) {

@@ -1,6 +1,5 @@
 
 function missions_task_run() {
-    log_write("Task Missions");
     if (g_missionsAutoMissionEnabled) {
         var currentEnergy = get_current_energy();
         if (currentEnergy >= g_missionsNextEnergy) {
@@ -92,7 +91,12 @@ function missions_current_rank() {
 	// beacause the missions are done is order, this means that all the other
 	// missions on the page have either same or higher rank.
     var rankText = $('.masteryBarProgress > span').last().html();
-    return parseInt(rankText.slice(-1), 10);
+	var percentage = parseInt($('.masteryBarProgress').last().text());
+	var rank = parseInt(rankText.slice(-1), 10);
+	if (rank == 4 && percentage == 100) {
+		rank++;
+	}
+    return rank;
 }
 
 function missions_next_mission() {

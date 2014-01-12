@@ -47,6 +47,7 @@ function scheduler_next_task() {
 	g_save();
 	g_schedulerLastTaskStartTime = new Date();
 	setTimeout(function() {
+		sidebar_update_current_task();
 		scheduler_run_task(g_schedulerCurrentTask);
 	}, 3000);
 }

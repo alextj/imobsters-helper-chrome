@@ -12,6 +12,7 @@ function create_sidebar() {
 
 	$(document.createElement('ul')).addClass('helper_sideBar').html(nav).appendTo('body');
 	$(document.createElement('div')).addClass('helper_sideBar2').html(
+        '<p id="sidebar_current_task"></p>' +
         '<p id="sidebar_investment_cost">Next investment cost: $' + g_investmentNextCost + '</p>' +
         '<p id="sidebar_mission_req_energy">Next mission requires: ' + g_missionsNextEnergy + ' e</p>' +
         '<p id="sidebar_fighting_status"></p>' +
@@ -20,8 +21,6 @@ function create_sidebar() {
         '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>' +
         '<input type="checkbox" id="checkbox_auto_skill_enabled"> Auto skill up<br>'
     ).appendTo('body');
-	$(document.createElement('div')).attr("id","log_window").html(g_log).appendTo('body');
-	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
     $(document.createElement('div')).attr("id","fight_stats_window").html(
         'fight stats:<br><br>'
     ).appendTo('body');
@@ -85,19 +84,6 @@ function create_sidebar() {
         g_investmentAutoInvestEnabled = this.checked ? true : false;
         g_save();
     });
-	
-	$('#log_window_btn').click(function() {
-		if ($('#log_window').css("height") == "200px") {
-			$('#log_window').css("height", 30);
-			$('#log_window_btn').html("^");
-            g_guiLogWindowHeight = 30;
-		} else {
-			$('#log_window').css("height", 200);
-			$('#log_window_btn').html("v");
-            g_guiLogWindowHeight = 200;
-		}
-        g_save();
-	});
     
     $('#fight_stats_size_btn').click(function() {
         if ($('#fight_stats_window').css("width") == "400px") {
@@ -125,13 +111,19 @@ function create_sidebar() {
         g_autoSkillEnabled = this.checked ? true : false;
         g_save();
     });
+	
+	sidebar_update_current_task();
 }
 
 function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
     totalHeight = total * scalar;
 	topHeight = 200 - totalHeight;
 	lostHeight = lost * scalar;
-	percentage = lostHeight * 100 / totalHeight;
+	if (totalHeight != 0) {
+		percentage = lostHeight * 100 / totalHeight;
+	} else {
+		percentage = 0;
+	}
 	totalHeight = totalHeight - lostHeight;
     $(document.createElement('table')).attr("id", "fight_stats_table" + i).appendTo("#fight_stats_window");
 	
@@ -172,6 +164,29 @@ function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
 	$("#fight_stats_table" + i + "_td5").html(level);
 	$("#fight_stats_table" + i + "_td5").css("height", 20);
 	$("#fight_stats_table" + i + "_td5").css("width", 20);
+	
+}
+
+function sidebar_update_current_task() {
+	var currentTask = 'none';
+	switch (g_schedulerCurrentTask) {
+		case TASK_INVEST:
+			currentTask = 'Investment';
+			break;
+		case TASK_SKILL:
+			currentTask = 'Skills';
+			break;
+		case TASK_MISSION:
+			currentTask = 'Missions';
+			break;
+		case TASK_FIGHT:
+			currentTask = 'Fighting';
+			break;
+		default:
+			currentTask = "g_schedulerCurrentTask = " + g_schedulerCurrentTask;
+			break;
+	}
+	$('#sidebar_current_task').html("Current task:<br>" + currentTask);
 }
 
 function sidebar_init_ui() {
@@ -191,8 +206,8 @@ function sidebar_init_ui() {
         $('#checkbox_auto_skill_enabled').prop('checked', true);
     }
 
-    $('#log_window').css("height", g_guiLogWindowHeight);
     $('#fight_stats_window').css("width", g_guiFightStatsWindowHeight);
+	init_log_window();
 }
 
 function sidebar_update_status() {

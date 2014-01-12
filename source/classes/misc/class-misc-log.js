@@ -18,7 +18,29 @@ function log_write(str) {
     }
 
     g_save();
-	$('#log_window').html(g_log.join('<br>'));
+	var html = g_log.join('<br>');
+	$('#log_window').html(html);
+}
+
+function init_log_window() {
+	var html = g_log.join('<br>');
+	$(document.createElement('div')).attr("id","log_window").html(html).appendTo('body');
+	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
+	
+	$('#log_window_btn').click(function() {
+		if ($('#log_window').css("height") == "200px") {
+			$('#log_window').css("height", 30);
+			$('#log_window_btn').html("^");
+            g_guiLogWindowHeight = 30;
+		} else {
+			$('#log_window').css("height", 200);
+			$('#log_window_btn').html("v");
+            g_guiLogWindowHeight = 200;
+		}
+        g_save();
+	});
+	
+    $('#log_window').css("height", g_guiLogWindowHeight);
 }
 
 function num_two_digits(num) {
