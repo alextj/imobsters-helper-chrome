@@ -5,10 +5,8 @@ $(document).ready(function() {
 
 	chrome.extension.sendRequest({action: 'gpmeGetOptions'}, function(theOptions) {
 		options = theOptions;
-		chrome.storage.sync.get('udid', function(obj) {
-            uid = obj['udid'];
-            init();
-		});
+		uid = options.mainAccount;
+        init();
 
 	});
 });

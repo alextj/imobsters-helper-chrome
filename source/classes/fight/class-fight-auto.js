@@ -150,6 +150,7 @@ function fight_add_mob_to_attacked_list(mob_id) {
 		// Queue maximum size reached, remove the oldest mob_id form the list
 		g_foughtMobsters.shift();
 	}
+	g_save();
 }
 
 function fight_mob_not_attacked_before(mob_id) {

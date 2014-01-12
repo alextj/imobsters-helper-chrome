@@ -23,7 +23,18 @@ function create_sidebar() {
 	$(document.createElement('div')).attr("id","log_window").html(g_log).appendTo('body');
 	$(document.createElement('div')).attr("id","log_window_btn").html('^').appendTo("body");
     $(document.createElement('div')).attr("id","fight_stats_window").html(
-        'fight stats:<br><br>' +
+        'fight stats:<br><br>'
+    ).appendTo('body');
+    $(document.createElement('div')).attr("id","fight_stats_size_btn").html('>').appendTo("body");
+
+
+	if (g_fightHistory == null) {
+		g_fightHistory = [];
+	}
+	
+	// [[9,45,3],[10,65,7],[11,78,34],[12,145,2],[13,170,160]]
+    // Draw fight stats, something like this:
+	/*
         '<table>'+
         '   <tr><td style="height: 0px; width: 20px; border: 0px solid #FFF;"> </td></tr>'+
         '   <tr><td style="height: 30px; width: 20px; border: 0px solid #FFF;">123<br>435</td></tr>'+
@@ -38,12 +49,7 @@ function create_sidebar() {
         '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #F00;"> </td></tr>'+
         '   <tr><td style="height: 20px; width: 20px; border: 1px solid #FFF;">12</td></tr>'+
         '</table>'+
-        ''
-    ).appendTo('body');
-    $(document.createElement('div')).attr("id","fight_stats_size_btn").html('>').appendTo("body");
-
-
-    // Draw fight stats
+	*/
     // Fight the largest total fights
     var largestTotal = 0;
     for (var i = 0; i < g_fightHistory.length; i++) {
@@ -52,16 +58,27 @@ function create_sidebar() {
             largestTotal = currentTotal;
         }
     }
+	if (g_totalFights > largestTotal) {
+		largestTotal = g_totalFights;
+	}
     // Define scalar
     var scalar = 200 / largestTotal;
+    var level;
+    var total;
+    var lost;
+    var totalHeight;
+	var lostHeight;
+	var topHeight;
+	var percentage;
     // Draw each bar
-    for (var i = 0; i < g_fightHistory.length; i++) {
-        var level = g_fightHistory[i][0];
-        var total = g_fightHistory[i][1];
-        var lost = g_fightHistory[i][2];
-        var totalHeight = 
-        $(document.createElement('table')).attr("id", "fight_stats_table_" + i).appendTo("fight_stats_window");
-        $(document.createElement('tr')).appendTo("fight_stats_table_" + i);
+    sidebar_draw_fight_stat(g_currentLevel, g_totalFights, g_lostFights, scalar, i);
+    for (var i = g_fightHistory.length - 1; i >= 0; i--) {
+        level = g_fightHistory[i][0];
+        total = g_fightHistory[i][1];
+        lost = g_fightHistory[i][2];
+		if (level != null && total != null && lost != null) {
+        	sidebar_draw_fight_stat(level, total, lost, scalar, i);
+		}
     }
 
     $('#checkbox_auto_invest_enabled').change(function(){
@@ -108,6 +125,53 @@ function create_sidebar() {
         g_autoSkillEnabled = this.checked ? true : false;
         g_save();
     });
+}
+
+function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
+    totalHeight = total * scalar;
+	topHeight = 200 - totalHeight;
+	lostHeight = lost * scalar;
+	percentage = lostHeight * 100 / totalHeight;
+	totalHeight = totalHeight - lostHeight;
+    $(document.createElement('table')).attr("id", "fight_stats_table" + i).appendTo("#fight_stats_window");
+	
+    $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr1").appendTo("#fight_stats_table" + i);
+    $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td1").appendTo("#fight_stats_table" + i + "_tr1");
+	$("#fight_stats_table" + i + "_td1").html(" ");
+	$("#fight_stats_table" + i + "_td1").css("height", topHeight);
+	$("#fight_stats_table" + i + "_td1").css("width", 20);
+	
+    $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr2").appendTo("#fight_stats_table" + i);
+    $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td2").appendTo("#fight_stats_table" + i + "_tr2");
+	$("#fight_stats_table" + i + "_td2").html(total+"<br>"+lost);
+	$("#fight_stats_table" + i + "_td2").css("height", 30);
+	$("#fight_stats_table" + i + "_td2").css("width", 20);
+	
+    $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr3").appendTo("#fight_stats_table" + i);
+    $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td3").appendTo("#fight_stats_table" + i + "_tr3");
+	$("#fight_stats_table" + i + "_td3").html(" ");
+	$("#fight_stats_table" + i + "_td3").css("height", totalHeight);
+	$("#fight_stats_table" + i + "_td3").css("width", 20);
+	$("#fight_stats_table" + i + "_td3").css("background-color", "#0F0");
+	$("#fight_stats_table" + i + "_td3").css("border", "1px solid #FFF");
+	
+    $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr4").appendTo("#fight_stats_table" + i);
+    $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td4").appendTo("#fight_stats_table" + i + "_tr4");
+	$("#fight_stats_table" + i + "_td4").html(Math.round(percentage) + "%");
+	$("#fight_stats_table" + i + "_td4").css("height", lostHeight);
+	$("#fight_stats_table" + i + "_td4").css("width", 20);
+	$("#fight_stats_table" + i + "_td4").css("background-color", "#F00");
+	$("#fight_stats_table" + i + "_td4").css("border", "1px solid #FFF");
+	$("#fight_stats_table" + i + "_td4").css("vertical-align", "top");
+	if (percentage < 15) {
+		$("#fight_stats_table" + i + "_td4").html(" ");
+	}
+	
+    $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr5").appendTo("#fight_stats_table" + i);
+    $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td5").appendTo("#fight_stats_table" + i + "_tr5");
+	$("#fight_stats_table" + i + "_td5").html(level);
+	$("#fight_stats_table" + i + "_td5").css("height", 20);
+	$("#fight_stats_table" + i + "_td5").css("width", 20);
 }
 
 function sidebar_init_ui() {
