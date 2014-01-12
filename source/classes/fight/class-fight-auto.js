@@ -199,6 +199,13 @@ function fight_get_fight_result() {
     		<span class="fail">Insuccesso...</span>
     		<div style="height:12px"></div>
     		<span class="lostFight">You lost the fight</span>
+	
+	<div id="fightResult">
+    	<div class="messageBoxFail">
+        	<span class="fail">Insuccesso</span>
+        They are in the emergency room and cannot be attacked.      
+		</div>    
+    </div>
 	*/
 	if (g_totalFights == null) {
 		g_totalFights = 0;
@@ -211,8 +218,10 @@ function fight_get_fight_result() {
 		hasWon = true;
 	} else if ($('#fightResult > div').find('span.lostFight').length > 0) {
 		var hasWon = false;
+	} else if ($('#fightResult > div.messageBoxFail').contains('They are in the emergency room and cannot be attacked')) {
+		log_write("Fight: he's in hospital.");
 	} else {
-		log_write("Fight: Result: Error - couldn't find fight result here!");
+		log_write("Fight: *** Error - couldn't find fight result here! ***");
 		return false;
 	}
 
@@ -223,9 +232,9 @@ function fight_get_fight_result() {
 
 	var percentage = g_lostFights * 100 / g_totalFights;
 	if (hasWon) {
-		log_write("Fight: won (" + percentage + "% lost total)");
+		log_write("Fight: won (" + percentage.toFixed(1) + "% lost total)");
 	} else {
-		log_write("Fight: LOST! (" + percentage + "% lost total)");
+		log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
 	}
 
 	if (g_totalFights > 20 && percentage > 20) {
