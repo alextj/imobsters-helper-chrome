@@ -13,6 +13,8 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_missionsRequiredLoot', JSON.stringify(g_missionsRequiredLoot));
+    localStorage.setItem(uid+'g_errors', JSON.stringify(g_errors));
     localStorage.setItem(uid+'g_guiLogWindowHeight', JSON.stringify(g_guiLogWindowHeight));
     localStorage.setItem(uid+'g_guiFightStatsWindowHeight', JSON.stringify(g_guiFightStatsWindowHeight));
     localStorage.setItem(uid+'g_currentLevel', JSON.stringify(g_currentLevel));
@@ -36,6 +38,8 @@ function g_save() {
 
 function init() {
 	g_page_loaded = true;
+    g_missionsRequiredLoot = JSON.parse(localStorage.getItem(uid+'g_missionsRequiredLoot'));
+    g_errors = JSON.parse(localStorage.getItem(uid+'g_errors'));
     g_guiLogWindowHeight = JSON.parse(localStorage.getItem(uid+'g_guiLogWindowHeight'));
     g_guiFightStatsWindowHeight = JSON.parse(localStorage.getItem(uid+'g_guiFightStatsWindowHeight'));
     g_currentLevel = JSON.parse(localStorage.getItem(uid+'g_currentLevel'));

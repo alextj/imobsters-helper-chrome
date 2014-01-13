@@ -23,6 +23,27 @@ function log_write(str) {
 	$('#log_window').html(html);
 }
 
+function log_error(str) {
+    if (g_errors == null) {
+        g_errors = [];
+		g_save();
+    }
+    var currentdate = new Date();
+    g_errors.unshift("[" +
+             currentdate.getFullYear() + "-" +
+             num_two_digits(currentdate.getMonth()+1)  + "-" +
+             num_two_digits(currentdate.getDate()) + " " +
+             num_two_digits(currentdate.getHours()) + ":" +
+             num_two_digits(currentdate.getMinutes()) + ":" +
+             num_two_digits(currentdate.getSeconds()) + "] " +
+             str);
+
+    if (g_errors.length > 50) {
+        g_errors.pop();
+    }
+    g_save();
+}
+
 function init_log_window() {
 	if (g_log == null) {
 		g_log = [];
