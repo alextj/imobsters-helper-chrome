@@ -259,12 +259,17 @@ function missions_do() {
 			lootedItemName = lootedItemName.split(":")[1].replace("!","").trim();
 			if (lootedItemName == g_missionsRequiredLoot) {
 				// Required loot found - no need to look for loot anymore.
+				log_write("Missions: Found required loot item '" + g_missionsRequiredLoot + "'. Setting it to null.")
 				g_missionsRequiredLoot = null;
+			} else {
+				var missionName = $('div.missionHeader').text();
+				log_error("Missions: Received wrong loot item. Expected '"+g_missionsRequiredLoot+"', received: '"+lootedItemName+"' in mission '"+missionName+"'");
 			}
+		} else if ($('div.missionSuccess').length > 0 && g_missionsRequiredLoot != null) {
+			var missionName = $('div.missionHeader').text();
+			log_write("Missions: Loot item '" + g_missionsRequiredLoot + "' not received this time from mission '"+missionName+"'");
 		}
     }
-	
-	var result = $('div.missionSuccess');
 	
 	if (g_missionsRequiredLoot != null) {
 		// Start doing the loot mission
@@ -301,7 +306,7 @@ function missions_do() {
 	// TODO - DEBUG: remove this debug if you don't know what it is!!
 	// It artificially modifies nextMission variable so that a certain mission would be triggered
 	// while I'm debugging this thing! It will ruin your game if it's not removed at some point!
-	nextMission++;
+	//nextMission++;
 	// TODO - END OF DEBUG
 	
     if (nextMission == -1) {
@@ -348,7 +353,7 @@ function missions_do_loot_mission() {
         scheduler_next_task();
 		return false;
     }
-	log_write("Missions: doing loot mission, looking for: " + g_missionsRequiredLoot);
+	log_write("Missions: doing loot mission '"+missions_loot[lootName][2]+"', looking for: " + lootName);
 	mission_do_mission(missionId);
 	//g_missionsAutoMissionEnabled = false;
 	//g_save();
