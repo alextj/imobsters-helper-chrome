@@ -37,8 +37,9 @@ var missions_loot = {
 
 function missions_task_run() {
     if (g_missionsAutoMissionEnabled) {
-		missions_do();
-        
+		setTimeout(function() {
+			missions_do();
+		}, (1000 + Math.random() * 1500));
     } else {
         scheduler_next_task();
     }

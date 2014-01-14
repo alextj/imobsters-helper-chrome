@@ -82,7 +82,9 @@ function fight_run_auto_fight() {
 				g_fightInHospitalWaitingForMoreStamina = false;
 				if (currentStamina > 0) {
 					// Find someone to attack now!
-					fight_do();
+					setTimeout(function() {
+						fight_do();
+					}, (1000 + Math.random() * 1500));
 				} else {
 					// Wait till there is enough stamina
 					scheduler_next_task();

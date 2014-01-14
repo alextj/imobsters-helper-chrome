@@ -3,7 +3,9 @@ function skill_task_run() {
     if (g_autoSkillEnabled) {
         var textDecor = $('.levelFrontTopArea > a').css("text-decoration");
         if (textDecor.indexOf("none") == -1) {
-            skill_do_skillup();
+			setTimeout(function() {
+				skill_do_skillup();
+			}, (1000 + Math.random() * 1500));
         } else {
             scheduler_next_task();
         }

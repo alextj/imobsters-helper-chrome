@@ -3,7 +3,9 @@ function investment_task_run() {
 	if (g_investmentAutoInvestEnabled == true) {
 		if (get_current_level() >= 7) {
         	if (get_current_cash() > g_investmentNextCost) {
-        		investment_do();
+				setTimeout(function() {
+					investment_do();
+				}, (1000 + Math.random() * 1500));
         	} else {
         		scheduler_next_task();
         	}
@@ -54,7 +56,7 @@ function investment_do() {
 		if (amount == 0) {
 			continue;
 		}
-
+		
 		invest_purchase(parseInt(index) + 1, amount, formNonce);
         log_write("Investment: purchased " + amount + "x " + estateNames[index]);
         itemsBought++;
@@ -100,7 +102,7 @@ function invest_calculations() {
 	Array.min = function(array) {
 		return Math.min.apply(Math, array);
 	};
-
+	var numBuildingsToBuy = 0;
 	while (totalCost < spendingAmount) {
 
 		// Find next building to buy
@@ -119,7 +121,9 @@ function invest_calculations() {
 		costOfminRoi = cost[minRoiIndex];
 
 		// We ran out of funds! We're done here
-		if ((totalCost + costOfminRoi) > spendingAmount) {
+		/* Note: small hack to set maximum number of buildings to buy at one time */
+		/* Currently set to 1 (end when numBuildingsToBuy > 0)*/
+		if ((totalCost + costOfminRoi) > spendingAmount || numBuildingsToBuy > 0) {
             g_investmentNextCost = costOfminRoi;
             g_save();
             sidebar_update_status();
@@ -140,7 +144,7 @@ function invest_calculations() {
 
 		// Increase current owned by one
 		owned[minRoiIndex] += 1;
-
+		numBuildingsToBuy++;
 	}
 }
 
