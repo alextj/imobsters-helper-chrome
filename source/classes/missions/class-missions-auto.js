@@ -256,15 +256,17 @@ function missions_do() {
 								</span>
 				 				Metal Pipe!<br>*/
 			var lootedItemName = $('div.missionSuccess > table > tbody > tr > td > div').has('span.missionPayoutGained').text().trim();
-			// You looted:    Metal Pipe!
-			lootedItemName = lootedItemName.split(":")[1].replace("!","").trim();
-			if (lootedItemName == g_missionsRequiredLoot) {
-				// Required loot found - no need to look for loot anymore.
-				log_write("Missions: Found required loot item '" + g_missionsRequiredLoot + "'. Setting it to null.")
-				g_missionsRequiredLoot = null;
-			} else {
-				var missionName = $('div.missionHeader').text();
-				log_error("Missions: Received wrong loot item. Expected '"+g_missionsRequiredLoot+"', received: '"+lootedItemName+"' in mission '"+missionName+"'");
+			if (lootedItemName.length > 0) {
+				// You looted:    Metal Pipe!
+				lootedItemName = lootedItemName.split(":")[1].replace("!","").trim();
+				if (lootedItemName == g_missionsRequiredLoot) {
+					// Required loot found - no need to look for loot anymore.
+					log_write("Missions: Found required loot item '" + g_missionsRequiredLoot + "'. Setting it to null.")
+					g_missionsRequiredLoot = null;
+				} else {
+					var missionName = $('div.missionHeader').text();
+					log_error("Missions: Received wrong loot item. Expected '"+g_missionsRequiredLoot+"', received: '"+lootedItemName+"' in mission '"+missionName+"'");
+				}
 			}
 		} else if ($('div.missionSuccess').length > 0 && g_missionsRequiredLoot != null) {
 			var missionName = $('div.missionHeader').text();
