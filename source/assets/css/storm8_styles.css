@@ -76,6 +76,10 @@ body{background-color:black !important;}
 	vertical-align: middle;
 }
 
+#textbox_mob_size {
+	width: 100px;
+}
+
 
 #fight_stats_size_btn {
 	z-index: 999999;

@@ -13,6 +13,8 @@ $(document).ready(function() {
 
 function g_save() {
 
+    localStorage.setItem(uid+'g_mobSize', JSON.stringify(g_mobSize));
+    localStorage.setItem(uid+'g_keepMeInHospitalMode', JSON.stringify(g_keepMeInHospitalMode));
     localStorage.setItem(uid+'g_missionsRequiredLoot', JSON.stringify(g_missionsRequiredLoot));
     localStorage.setItem(uid+'g_errors', JSON.stringify(g_errors));
     localStorage.setItem(uid+'g_guiLogWindowHeight', JSON.stringify(g_guiLogWindowHeight));
@@ -38,6 +40,8 @@ function g_save() {
 
 function init() {
 	g_page_loaded = true;
+    g_mobSize = JSON.parse(localStorage.getItem(uid+'g_mobSize'));
+    g_keepMeInHospitalMode = JSON.parse(localStorage.getItem(uid+'g_keepMeInHospitalMode'));
     g_missionsRequiredLoot = JSON.parse(localStorage.getItem(uid+'g_missionsRequiredLoot'));
     g_errors = JSON.parse(localStorage.getItem(uid+'g_errors'));
     g_guiLogWindowHeight = JSON.parse(localStorage.getItem(uid+'g_guiLogWindowHeight'));

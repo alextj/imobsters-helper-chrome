@@ -19,7 +19,9 @@ function create_sidebar() {
         '<input type="checkbox" id="checkbox_auto_invest_enabled"> Auto invest<br>' +
         '<input type="checkbox" id="checkbox_auto_missions_enabled"> Auto missions<br>' +
         '<input type="checkbox" id="checkbox_auto_fighting_enabled"> Auto fighting<br>' +
-        '<input type="checkbox" id="checkbox_auto_skill_enabled"> Auto skill up<br>'
+        '<input type="checkbox" id="checkbox_keep_in_hospital_enabled"> Stay in hospital<br>' +
+        '<input type="checkbox" id="checkbox_auto_skill_enabled"> Auto skill up<br>' +
+        'Mob size <input type="text" id="textbox_mob_size"><br>'
     ).appendTo('body');
     $(document.createElement('div')).attr("id","fight_stats_window").html(
         'fight stats:<br><br>'
@@ -119,9 +121,18 @@ function create_sidebar() {
         g_fightAutoFightEnabled = this.checked ? true : false;
         g_save();
     });
+    $('#checkbox_keep_in_hospital_enabled').change(function(){
+        g_keepMeInHospitalMode = this.checked ? true : false;
+        g_save();
+    });
 
     $('#checkbox_auto_skill_enabled').change(function(){
         g_autoSkillEnabled = this.checked ? true : false;
+        g_save();
+    });
+
+    $('#textbox_mob_size').on('input', function(){
+        g_mobSize = parseInt(this.value, 10);
         g_save();
     });
 	
@@ -222,9 +233,17 @@ function sidebar_init_ui() {
         $('#checkbox_auto_fighting_enabled').prop('checked', true);
     }
 
+    if (g_keepMeInHospitalMode === true) {
+        $('#checkbox_keep_in_hospital_enabled').prop('checked', true);
+    }
+
     if (g_autoSkillEnabled === true) {
         $('#checkbox_auto_skill_enabled').prop('checked', true);
     }
+	
+	if (g_mobSize > 0) {
+		$('#textbox_mob_size').val('' + g_mobSize);
+	}
 
     $('#fight_stats_window').css("width", g_guiFightStatsWindowHeight);
 	init_log_window();

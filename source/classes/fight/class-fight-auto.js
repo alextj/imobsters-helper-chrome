@@ -43,9 +43,6 @@ Smart use of health - result monitoring:
 
 */
 
-// TODO: get mob size dynamically
-var mob_size = 4;
-
 function fight_task_run() {
 	fight_run_auto_fight();
 }
@@ -59,24 +56,26 @@ function fight_run_auto_fight() {
 			var currentStamina = get_current_stamina();
 			var maxStamina = get_max_stamina();
 			if (is_in_hospital()) {
-				if (maxStamina > 11) {
-					g_fightMinStaminaToHeal = 11;
-				} else {
-					g_fightMinStaminaToHeal = maxStamina;
-				}
-				if (currentStamina < g_fightMinStaminaToHeal) {
-					// Not enough stamina to heal, wait for more stamina
-					if (g_fightInHospitalWaitingForMoreStamina == false) {
-						log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
-						g_fightInHospitalWaitingForMoreStamina = true;
+				if (g_keepMeInHospitalMode == false) {
+					if (maxStamina > 11) {
+						g_fightMinStaminaToHeal = 11;
+					} else {
+						g_fightMinStaminaToHeal = maxStamina;
 					}
-					scheduler_next_task();
-					return false;
-				} else {
-					// There is enough stamina - heal now and fight!
-					g_fightInHospitalWaitingForMoreStamina = false;
-					log_write('Fight: In hospital, healing!');
-					heal_auto();
+					if (currentStamina < g_fightMinStaminaToHeal) {
+						// Not enough stamina to heal, wait for more stamina
+						if (g_fightInHospitalWaitingForMoreStamina == false) {
+							log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+							g_fightInHospitalWaitingForMoreStamina = true;
+						}
+						scheduler_next_task();
+						return false;
+					} else {
+						// There is enough stamina - heal now and fight!
+						g_fightInHospitalWaitingForMoreStamina = false;
+						log_write('Fight: In hospital, healing!');
+						heal_auto();
+					}
 				}
 			} else {
 				g_fightInHospitalWaitingForMoreStamina = false;
@@ -111,7 +110,7 @@ function fight_do() {
 	var someoneWasAttacked = false;
 	$('.fightMobSize').each(function(index) {
 		var thisMobSize = $(this).text().trim();
-		if (thisMobSize <= mob_size - 2) {
+		if (thisMobSize <= g_mobSize - 2) {
 			// Small enough to attack
 			var mob_id = fight_mob_id(index);
 			if (fight_mob_not_attacked_before(mob_id)) {
@@ -233,7 +232,7 @@ function fight_get_fight_result() {
 		log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
 	}
 
-	if (g_totalFights > 20 && percentage > 20) {
+	if (g_totalFights > 20 && percentage > 20 && g_keepMeInHospitalMode == false) {
 		log_write("Fight: auto-fight stopped, losing percentage too high (" + percentage + "% lost total)");
 		g_fightAutoFightEnabled = false;
 		g_save();
