@@ -76,6 +76,9 @@ function fight_run_auto_fight() {
 						log_write('Fight: In hospital, healing!');
 						heal_auto();
 					}
+				} else {
+					// Stay in hospital
+					scheduler_next_task();
 				}
 			} else {
 				g_fightInHospitalWaitingForMoreStamina = false;
