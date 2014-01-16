@@ -3,6 +3,15 @@ iMobsters Helper for Chrome
 
 A Chrome extension for Storm8's iMobsters game.
 
+Fork note
+---------
+This is a fork from Geczy's nice extension. This fork adds complete automation of most of game actions (investing, doing missions, fighting, leveling up). The user interface is not very user friendly at the moment, a lot of things are hard coded, but it suits my needs. I might improve it in the future when/if I have more time ;)
+
+Thanks to Geczy for doing the hard work.
+
+
+Below this line is unmodified README.md from the original project at the date when I forked it.
+
 Quick start
 ------------
 
