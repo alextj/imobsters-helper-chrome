@@ -61,6 +61,24 @@ function is_in_hospital() {
 }
 
 /**
+ * Adds thousand separation commas to numbers.
+ * @return {string}	Formatted number
+ * Taken from http://www.mredkj.com/javascript/numberFormat.html#addcommas
+ * Author: Keith Jenci
+ */
+function print_num(num) {
+	num += '';
+	x = num.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
+
+/**
  * Formats any ol' numba from a string into a float.
  *
  * Removes commas, dollar signs, and any other non 0-9 char.
