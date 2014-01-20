@@ -86,7 +86,7 @@ function bank_deposit_after_tax(amount) {
 	var curCash = get_current_cash();
 	
 	if (requiredCash > curCash) {
-		log_write("Deposit: failed. Not enough cash!");
+		///log_write("Deposit: failed. Not enough cash!");
 		return false;
 	}
 
