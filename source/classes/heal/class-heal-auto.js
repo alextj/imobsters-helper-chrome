@@ -63,7 +63,7 @@ function heal_process(data) {
 		var iBank = format_number(cash);
 		var iDiff = iCost - iBank;
 		if (iBank < iCost) {
-			log_write("Healing: not enough money in bank to heal - depositing " + iDiff);
+			//log_write("Healing: not enough money in bank to heal - depositing " + iDiff);
 			bank_deposit_after_tax(iDiff);
 			return false;
 		} else {
@@ -90,7 +90,7 @@ function heal_check_success(data, cost) {
 		log_write("Healing: Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
 		return false;
 	} else {
-		log_write('Healing: Success. Healed for: ' + cost);
+		//log_write('Healing: Success. Healed for: ' + cost);
 		location.reload();
 		return true;
 	}

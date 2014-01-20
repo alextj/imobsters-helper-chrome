@@ -281,6 +281,10 @@ function missions_do() {
 	}
 
 	// See if there is enough stamina to do the next mission
+	// This is not always correct - if previous mission was just completed to 100%
+	// This will hold the energy requirement for that mission, not the next one.
+	// But this is an insignificant problem, since the accurate energy requirement
+	// will be found out on the next Missions page visit.
     var currentEnergy = get_current_energy();
     if (currentEnergy < g_missionsNextEnergy) {
         scheduler_next_task();
@@ -305,12 +309,6 @@ function missions_do() {
     }
 
     var nextMission = missions_next_mission();
-
-	// TODO - DEBUG: remove this debug if you don't know what it is!!
-	// It artificially modifies nextMission variable so that a certain mission would be triggered
-	// while I'm debugging this thing! It will ruin your game if it's not removed at some point!
-	//nextMission++;
-	// TODO - END OF DEBUG
 	
     if (nextMission == -1) {
         log_write("Missions: no available missions to do *******");
@@ -320,7 +318,7 @@ function missions_do() {
 
     var reqEnergy = mission_get_mission_energy(nextMission);
 	if (reqEnergy != g_missionsNextEnergy) {
-		// Update sideback with new energy requirement
+		// Update sidebar with new energy requirement
         g_missionsNextEnergy = reqEnergy;
         g_save();
         sidebar_update_status();
@@ -334,7 +332,7 @@ function missions_do() {
     }
 	
 	// There is enough energy - do the mission
-	log_write("Missions: Doing mission")
+	log_write("Missions: Doing mission " + missions_get_mission_name(nextMission) + " (" + missions_get_mission_completion(nextMission) + "%)");
     mission_do_mission(nextMission);
 }
 
@@ -377,11 +375,12 @@ function missions_current_rank() {
 
 function missions_next_mission() {
     var nextMission = -1;
-	$('.masteryBarProgress').each(
+	$('.missionDetails .masteryBarProgress').each(
         function(index) {
             var progressPercent = parseInt($(this).html(), 10);
             if (progressPercent < 100 && nextMission == -1) {
                 nextMission = index;
+				return false;
             }
         }
     );
@@ -392,6 +391,15 @@ function mission_get_mission_energy(index) {
     reqEnergy = parseInt($('.requiredEnergy').eq(index).html(), 10);
     return reqEnergy;
 }
+
+function missions_get_mission_name(index) {
+	return $('.missionName').eq(index).html().trim();
+}
+
+function missions_get_mission_completion(index) {
+	return parseInt($('.missionDetails .masteryBarProgress').eq(index).html(), 10);
+}
+
 
 function mission_do_mission(index) {
     $('.actionButton').get(index).click();

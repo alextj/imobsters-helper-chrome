@@ -58,14 +58,14 @@ function investment_do() {
 		}
 		
 		invest_purchase(parseInt(index) + 1, amount, formNonce);
-        log_write("Investment: purchased " + amount + "x " + estateNames[index]);
+        //log_write("Investment: purchased " + amount + "x " + estateNames[index]);
         itemsBought++;
 	}
     if (itemsBought > 0) {
         var cost = invest_find_estate_data('.reBuyAction .cash > span');
         var nextName = estateNames[data['nextItemIndex']];
         var nextCost = cost[data['nextItemIndex']];
-        log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
+        //log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
 	}
 	window.location.href = 'home.php';
 }

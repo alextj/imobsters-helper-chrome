@@ -94,7 +94,7 @@ function bank_deposit_after_tax(amount) {
 		depositAmount: requiredCash,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		log_write("Deposit: Success! Amount deposited: " + numberWithCommas(amount));
+		//log_write("Deposit: Success! Amount deposited: " + numberWithCommas(amount));
 		// go to home page to update the page header
 		window.location = 'home.php';
 		return true;

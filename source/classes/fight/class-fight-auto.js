@@ -65,7 +65,7 @@ function fight_run_auto_fight() {
 					if (currentStamina < g_fightMinStaminaToHeal) {
 						// Not enough stamina to heal, wait for more stamina
 						if (g_fightInHospitalWaitingForMoreStamina == false) {
-							log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+							//log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
 							g_fightInHospitalWaitingForMoreStamina = true;
 						}
 						scheduler_next_task();
@@ -73,7 +73,7 @@ function fight_run_auto_fight() {
 					} else {
 						// There is enough stamina - heal now and fight!
 						g_fightInHospitalWaitingForMoreStamina = false;
-						log_write('Fight: In hospital, healing!');
+						//log_write('Fight: In hospital, healing!');
 						heal_auto();
 					}
 				} else {
@@ -119,7 +119,7 @@ function fight_do() {
 			if (fight_mob_not_attacked_before(mob_id)) {
 				
 				var mob_name = fight_mob_name(index);
-				log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
+				//log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
 				fight_add_mob_to_attacked_list(mob_id);
 				fight_attack_mob(index);
 				someoneWasAttacked = true;
@@ -230,9 +230,9 @@ function fight_get_fight_result() {
 
 	var percentage = g_lostFights * 100 / g_totalFights;
 	if (hasWon) {
-		log_write("Fight: won (" + percentage.toFixed(1) + "% lost total)");
+		//log_write("Fight: won (" + percentage.toFixed(1) + "% lost total)");
 	} else {
-		log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
+		//log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
 	}
 
 	if (g_totalFights > 20 && percentage > 20 && g_keepMeInHospitalMode == false) {
