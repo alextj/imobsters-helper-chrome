@@ -26,6 +26,9 @@ function create_sidebar() {
     $(document.createElement('div')).attr("id","fight_stats_window").html(
         'fight stats:<br><br>'
     ).appendTo('body');
+    $(document.createElement('table')).attr("id","fight_stats_container_table").html(
+        '<table><tr id="fight_stats_window_table_tr"></tr></table>'
+    ).appendTo('#fight_stats_window');
     $(document.createElement('div')).attr("id","fight_stats_size_btn").html('>').appendTo("body");
 
 
@@ -156,25 +159,23 @@ function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
 		}
 	}
 	totalHeight = totalHeight - lostHeight;
-    $(document.createElement('table')).attr("id", "fight_stats_table" + i).appendTo("#fight_stats_window");
+    $(document.createElement('td')).attr("id", "fight_stats_window_table_tr_td" + i).appendTo("#fight_stats_window_table_tr");
+    $(document.createElement('table')).attr("id", "fight_stats_table" + i).attr("class", "fight_stats_graph_table").appendTo("#fight_stats_window_table_tr_td" + i);
 	
     $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr1").appendTo("#fight_stats_table" + i);
     $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td1").appendTo("#fight_stats_table" + i + "_tr1");
 	$("#fight_stats_table" + i + "_td1").html(" ");
 	$("#fight_stats_table" + i + "_td1").css("height", topHeight);
-	$("#fight_stats_table" + i + "_td1").css("width", 20);
 	
     $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr2").appendTo("#fight_stats_table" + i);
     $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td2").appendTo("#fight_stats_table" + i + "_tr2");
 	$("#fight_stats_table" + i + "_td2").html(total+"<br>"+lost);
 	$("#fight_stats_table" + i + "_td2").css("height", 30);
-	$("#fight_stats_table" + i + "_td2").css("width", 20);
 	
     $(document.createElement('tr')).attr("id", "fight_stats_table" + i + "_tr3").appendTo("#fight_stats_table" + i);
     $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td3").appendTo("#fight_stats_table" + i + "_tr3");
 	$("#fight_stats_table" + i + "_td3").html(" ");
 	$("#fight_stats_table" + i + "_td3").css("height", totalHeight);
-	$("#fight_stats_table" + i + "_td3").css("width", 20);
 	$("#fight_stats_table" + i + "_td3").css("background-color", "#0F0");
 	$("#fight_stats_table" + i + "_td3").css("border", "1px solid #FFF");
 	
@@ -182,7 +183,6 @@ function sidebar_draw_fight_stat(level, total, lost, scalar, i) {
     $(document.createElement('td')).attr("id", "fight_stats_table" + i + "_td4").appendTo("#fight_stats_table" + i + "_tr4");
 	$("#fight_stats_table" + i + "_td4").html(Math.round(percentage) + "%");
 	$("#fight_stats_table" + i + "_td4").css("height", lostHeight);
-	$("#fight_stats_table" + i + "_td4").css("width", 20);
 	$("#fight_stats_table" + i + "_td4").css("background-color", "#F00");
 	$("#fight_stats_table" + i + "_td4").css("border", "1px solid #FFF");
 	$("#fight_stats_table" + i + "_td4").css("vertical-align", "top");

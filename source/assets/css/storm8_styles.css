@@ -59,16 +59,26 @@ body{background-color:black !important;}
 	width: 50px;
 	height: 300px;
 	border: 1px solid #FFF;
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: auto;
 	font-size: 9px;
 	line-height: 10px;
+	padding-top: 3px;
 }
-#fight_stats_window table {
+.fight_stats_graph_table {
 	float: left;
 	border: 1px solid #FFF;
-	margin-left: 10px;
-	margin-bottom: 20px;
+	margin-left: 2px;
+}
+
+.fight_stats_graph_table td {
+	min-width: 20px;
+}
+
+#fight_stats_container_table {
+	border: 0;
+	margin: 0;
+	padding: 0;
 }
 
 #fight_stats_window td {
