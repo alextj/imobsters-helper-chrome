@@ -24,11 +24,13 @@ function heal_verify() {
 
 	if (!level) {
 		log_write("Healing: Action failed. Level could not be found.");
+		scheduler_next_task();
 		return false;
 	}
 
 	if (level < 5) {
 		log_write("Healing: Action failed. You must be level 5+ to heal.");
+		scheduler_next_task();
 		return false;
 	}
 
@@ -75,6 +77,7 @@ function heal_process(data) {
 	} else {
 		var text = $(data).find('.hospitalText').text();
 		log_write('Healing: Failed. ' + text);
+		scheduler_next_task();
 		return false;
 	}
 
@@ -87,11 +90,12 @@ function heal_check_success(data, cost) {
 	var failedText = $(data).find('.messageBoxFail').text();
 
 	if (failedText) {
-		log_write("Healing: Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
+		//log_write("Healing: Failed. Cost to heal: " + cost + ". " + failedText.replace('Insuccesso: ', ''));
+		scheduler_next_task();
 		return false;
 	} else {
 		//log_write('Healing: Success. Healed for: ' + cost);
-		location.reload();
+		window.location.href = 'home.php';
 		return true;
 	}
 

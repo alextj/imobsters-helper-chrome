@@ -216,7 +216,7 @@ function fight_get_fight_result() {
 	} else if ($('#fightResult > div').find('span.lostFight').length > 0) {
 		var hasWon = false;
 	} else if ($("#fightResult > div.messageBoxFail:contains('They are in the emergency room and cannot be attacked')").length > 0) {
-		log_write("Fight: he's in hospital.");
+		//log_write("Fight: he's in hospital.");
 		return false;
 	} else {
 		log_write("Fight: *** Error - couldn't find fight result here! ***");

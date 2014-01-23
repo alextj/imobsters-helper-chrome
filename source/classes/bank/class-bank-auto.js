@@ -73,6 +73,7 @@ function bank_deposit_after_tax(amount) {
 
 	if (!amount || amount === 0) {
 		alert("Deposit failed. Could not find cash value.");
+		scheduler_next_task();
 		return false;
 	}
 	/*
@@ -87,6 +88,7 @@ function bank_deposit_after_tax(amount) {
 	
 	if (requiredCash > curCash) {
 		///log_write("Deposit: failed. Not enough cash!");
+		scheduler_next_task();
 		return false;
 	}
 
