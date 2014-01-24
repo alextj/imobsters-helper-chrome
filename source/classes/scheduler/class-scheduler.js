@@ -44,8 +44,8 @@ function scheduler_next_task() {
 	if (g_schedulerCurrentTask == TASK_NUM_TASKS) {
 		g_schedulerCurrentTask = TASK_NONE + 1;
 	}
-	g_save();
 	g_schedulerLastTaskStartTime = new Date();
+	g_save();
 	setTimeout(function() {
 		sidebar_update_current_task();
 		scheduler_run_task(g_schedulerCurrentTask);

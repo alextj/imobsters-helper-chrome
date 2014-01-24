@@ -9,6 +9,11 @@ function get_current_cash() {
 	return format_number($('#cashCurrent').text());
 }
 
+
+function get_current_income() {
+	return format_number($('#cashTimerDiv > span > span').text());
+}
+
 /**
  * Current amount of energy.
  *

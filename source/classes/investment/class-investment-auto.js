@@ -2,7 +2,10 @@
 function investment_task_run() {
 	if (g_investmentAutoInvestEnabled == true) {
 		if (get_current_level() >= 7) {
-        	if (get_current_cash() > g_investmentNextCost) {
+			var currentIncome = get_current_income();
+			// We want to always leave at least (1x current income) of cash - 
+			// So purchase only when there is (current income + price of investment) cash at hand
+        	if (get_current_cash() > g_investmentNextCost + currentIncome) {
 				setTimeout(function() {
 					investment_do();
 				}, (1000 + Math.random() * 1500));
