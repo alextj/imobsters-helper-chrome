@@ -2,7 +2,7 @@
  * Init for some healing power.
  */
 
-var heal_log_enabled = false;
+var heal_log_enabled = true;
 
 function heal_auto() {
 	heal_error_not_enough_money = false;
@@ -64,8 +64,6 @@ function heal_process(data) {
 		var cash = $(data).find('.hospitalText .cash').text();
 
 		var iCost = format_number(cost);
-		var iBank = format_number(cash);
-		var iDiff = iCost - iBank;
 		if (iCost >= 1000000) {
 			// Multiply the cost of healing a little bit, because
 			// healing might cost more than what's written! For example:
@@ -74,6 +72,8 @@ function heal_process(data) {
 			// "000", they might be "456".
 			iCost = iCost * 1.01;
 		}
+		var iBank = format_number(cash);
+		var iDiff = iCost - iBank;
 		if (iBank < iCost) {
 			if (heal_log_enabled) log_write("Healing: not enough money in bank to heal - cost of healing: $" + iCost + ", in bank: $" + iBank + ", depositing " + iDiff);
 			bank_deposit_after_tax(iDiff);

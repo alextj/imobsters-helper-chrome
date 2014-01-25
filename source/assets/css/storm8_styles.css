@@ -104,6 +104,11 @@ body{background-color:black !important;}
 	text-align: center;
 }
 
+.roi_info {
+	vertical-align: middle;
+	min-width: 100px;
+}
+
 .modal_loading {
     display:    none;
     position:   fixed;

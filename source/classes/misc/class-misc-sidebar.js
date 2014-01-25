@@ -48,25 +48,6 @@ function create_sidebar() {
 		g_lostFights = 0;
 		g_save();
 	}
-	
-	// [[9,45,3],[10,65,7],[11,78,34],[12,145,2],[13,170,160]]
-    // Draw fight stats, something like this:
-	/*
-        '<table>'+
-        '   <tr><td style="height: 0px; width: 20px; border: 0px solid #FFF;"> </td></tr>'+
-        '   <tr><td style="height: 30px; width: 20px; border: 0px solid #FFF;">123<br>435</td></tr>'+
-        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #0F0;"> </td></tr>'+
-        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #F00;"> </td></tr>'+
-        '   <tr><td style="height: 20px; width: 20px; border: 1px solid #FFF;">11</td></tr>'+
-        '</table>'+
-        '<table>'+
-        '   <tr><td style="height: 0px; width: 20px; border: 0px solid #FFF;"> </td></tr>'+
-        '   <tr><td style="height: 30px; width: 20px; border: 0px solid #FFF;">34<br>345</td></tr>'+
-        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #0F0;"> </td></tr>'+
-        '   <tr><td style="height: 100px; width: 20px; border: 1px solid #FFF; background-color: #F00;"> </td></tr>'+
-        '   <tr><td style="height: 20px; width: 20px; border: 1px solid #FFF;">12</td></tr>'+
-        '</table>'+
-	*/
     // Fight the largest total fights
     var largestTotal = 0;
     for (var i = 0; i < g_fightHistory.length; i++) {
