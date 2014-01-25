@@ -1,4 +1,6 @@
 
+var investment_log_enabled = false;
+
 function investment_task_run() {
 	if (g_investmentAutoInvestEnabled == true) {
 		if (get_current_level() >= 7) {
@@ -61,14 +63,14 @@ function investment_do() {
 		}
 		
 		invest_purchase(parseInt(index) + 1, amount, formNonce);
-        //log_write("Investment: purchased " + amount + "x " + estateNames[index]);
+        if (investment_log_enabled) log_write("Investment: purchased " + amount + "x " + estateNames[index]);
         itemsBought++;
 	}
     if (itemsBought > 0) {
         var cost = invest_find_estate_data('.reBuyAction .cash > span');
         var nextName = estateNames[data['nextItemIndex']];
         var nextCost = cost[data['nextItemIndex']];
-        //log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
+        if (investment_log_enabled) log_write("Investment: now saving up for " + nextName + " ($" + nextCost + ")");
 	}
 	window.location.href = 'home.php';
 }

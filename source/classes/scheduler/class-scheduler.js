@@ -28,8 +28,7 @@ function scheduler_run() {
 	}
 
 	var timeNow = new Date();
-	var timeEnd = addMinutes(g_schedulerLastTaskStartTime, 5);
-	//var timeEnd = addSeconds(g_schedulerLastTaskStartTime, 10);
+	var timeEnd = addMinutes(g_schedulerLastTaskStartTime, 3);
 
 	if (timeNow > timeEnd) {
 		scheduler_next_task();

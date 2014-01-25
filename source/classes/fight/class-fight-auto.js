@@ -43,6 +43,8 @@ Smart use of health - result monitoring:
 
 */
 
+var fight_log_enabled = false;
+
 function fight_task_run() {
 	fight_run_auto_fight();
 }
@@ -65,7 +67,7 @@ function fight_run_auto_fight() {
 					if (currentStamina < g_fightMinStaminaToHeal) {
 						// Not enough stamina to heal, wait for more stamina
 						if (g_fightInHospitalWaitingForMoreStamina == false) {
-							//log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
+							if (fight_log_enabled) log_write('Fight: In hospital, waiting for ' + g_fightMinStaminaToHeal + ' S before healing');
 							g_fightInHospitalWaitingForMoreStamina = true;
 						}
 						scheduler_next_task();
@@ -73,7 +75,7 @@ function fight_run_auto_fight() {
 					} else {
 						// There is enough stamina - heal now and fight!
 						g_fightInHospitalWaitingForMoreStamina = false;
-						//log_write('Fight: In hospital, healing!');
+						if (fight_log_enabled) log_write('Fight: In hospital, healing!');
 						heal_auto();
 					}
 				} else {
@@ -119,7 +121,7 @@ function fight_do() {
 			if (fight_mob_not_attacked_before(mob_id)) {
 				
 				var mob_name = fight_mob_name(index);
-				//log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
+				if (fight_log_enabled) log_write("Fight: attacking mobster " + mob_name + ", id " + mob_id + ", size " + thisMobSize);
 				fight_add_mob_to_attacked_list(mob_id);
 				fight_attack_mob(index);
 				someoneWasAttacked = true;
@@ -184,26 +186,6 @@ function fight_reset_fight_count() {
 }
 
 function fight_get_fight_result() {
-	/*
-	<div id="fightResult">
-    	<div class="messageBoxSuccess">
-    		<span class="success">Eccellente!</span>
-    		<div style="height:12px"></div>
-    		<span class="wonFight">You won the fight</span>
-	
-	<div id="fightResult">
-    	<div class="messageBoxFail" style="width: 92%">
-    		<span class="fail">Insuccesso...</span>
-    		<div style="height:12px"></div>
-    		<span class="lostFight">You lost the fight</span>
-	
-	<div id="fightResult">
-    	<div class="messageBoxFail">
-        	<span class="fail">Insuccesso</span>
-        They are in the emergency room and cannot be attacked.      
-		</div>    
-    </div>
-	*/
 	if (g_totalFights == null) {
 		g_totalFights = 0;
 	}
@@ -216,7 +198,7 @@ function fight_get_fight_result() {
 	} else if ($('#fightResult > div').find('span.lostFight').length > 0) {
 		var hasWon = false;
 	} else if ($("#fightResult > div.messageBoxFail:contains('They are in the emergency room and cannot be attacked')").length > 0) {
-		//log_write("Fight: he's in hospital.");
+		if (fight_log_enabled) log_write("Fight: he's in hospital.");
 		return false;
 	} else {
 		log_write("Fight: *** Error - couldn't find fight result here! ***");
@@ -230,9 +212,9 @@ function fight_get_fight_result() {
 
 	var percentage = g_lostFights * 100 / g_totalFights;
 	if (hasWon) {
-		//log_write("Fight: won (" + percentage.toFixed(1) + "% lost total)");
+		if (fight_log_enabled) log_write("Fight: won (" + percentage.toFixed(1) + "% lost total)");
 	} else {
-		//log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
+		if (fight_log_enabled) log_write("Fight: LOST! (" + percentage.toFixed(1) + "% lost total)");
 	}
 
 	if (g_totalFights > 20 && percentage > 20 && g_keepMeInHospitalMode == false) {

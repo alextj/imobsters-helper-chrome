@@ -2,6 +2,8 @@
  * Automatically deposit your full cash on hand amount.
  */
 
+var bank_log_enabled = false;
+
 function bank_auto() {
 
 	if (!bank_verify()) {
@@ -24,12 +26,12 @@ function bank_verify() {
 	var level = get_current_level();
 
 	if (!level) {
-		alert("Action failed. Level could not be found.")
+		log_error("Action failed. Level could not be found.")
 		return false;
 	}
 
 	if (level < 5) {
-		alert("Deposit failed. You must be level 5+ to use the bank.")
+		if (bank_log_enabled) log_write("Deposit failed. You must be level 5+ to use the bank.")
 		return false;
 	}
 
@@ -48,12 +50,12 @@ function bank_deposit(amount) {
 	var curCash = get_current_cash();
 
 	if (!amount || amount === 0) {
-		alert("Deposit failed. Could not find cash value.");
+		log_error("Deposit failed. Could not find cash value.");
 		return false;
 	}
 	
 	if (amount > curCash) {
-		log_write("Deposit failed. Not enough cash!");
+		if (bank_log_enabled) log_write("Deposit failed. Not enough cash!");
 		return false;
 	}
 
@@ -61,7 +63,7 @@ function bank_deposit(amount) {
 		depositAmount: amount,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		log_write("Success! Amount deposited: " + numberWithCommas(amount));
+		if (bank_log_enabled) log_write("Success! Amount deposited: " + numberWithCommas(amount));
 		return true;
 	});
 
@@ -72,7 +74,7 @@ function bank_deposit(amount) {
 function bank_deposit_after_tax(amount) {
 
 	if (!amount || amount === 0) {
-		alert("Deposit failed. Could not find cash value.");
+		log_error("Deposit failed. Could not find cash value.");
 		scheduler_next_task();
 		return false;
 	}
@@ -87,7 +89,7 @@ function bank_deposit_after_tax(amount) {
 	var curCash = get_current_cash();
 	
 	if (requiredCash > curCash) {
-		///log_write("Deposit: failed. Not enough cash!");
+		if (bank_log_enabled) log_write("Deposit: failed. Not enough cash!");
 		scheduler_next_task();
 		return false;
 	}
@@ -96,7 +98,7 @@ function bank_deposit_after_tax(amount) {
 		depositAmount: requiredCash,
 		action: 'Deposit'
 	}, function(data, textStatus, xhr) {
-		//log_write("Deposit: Success! Amount deposited: " + numberWithCommas(amount));
+		if (bank_log_enabled) log_write("Deposit: Success! Amount deposited: " + numberWithCommas(amount));
 		// go to home page to update the page header
 		window.location = 'home.php';
 		return true;
